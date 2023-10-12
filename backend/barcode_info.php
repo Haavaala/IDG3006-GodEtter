@@ -3,15 +3,17 @@
 // Require common file
 require_once __DIR__ . '/common.php';
 
+cors();
+
 if (!isset($_ENV['API_KEY'])) {
     // Check if API key is set
-    response(400,"API key not set");
+    response(500, "Server error");
     exit;
 }
 
 if (!isset($_ENV['API_URL'])) {
     // Check if API url is set
-    response(400,"API url not set");
+    response(500, "Server error");
     exit;
 }
 
@@ -21,12 +23,13 @@ if (isset($_GET['barcode']) && !empty($_GET['barcode'])) {
 
     // Clean the string to prevent injections
     clean_string($barcode);
-    
+
     // Run the API request
     barcode_req($barcode);
 } else {
-    response(400,"Barcode not set",NULL);
+    response(400, "Barcode not set", NULL);
 }
+
 
 function barcode_req($barcode)
 {
@@ -57,22 +60,76 @@ function barcode_req($barcode)
     // Decode the data from json
     $data = json_decode($data);
 
-    if (count($data->data->products) > 0){
-        response(200,return_product($data));
+    // Unset variables
+    unset($token);
+    unset($url);
+
+    // Check if property "message" exists in the request. If so, the product was not found.
+    if (!property_exists($data, "message")) {
+        send_product($data, $barcode);
     } else {
-        response(400,"Product not found");
+        send_product(null, $barcode);
     }
-    
 }
 
-function return_product($req_data)
+function send_product($req_data, $barcode)
 {
-    $product = $req_data->data->products[0];
+    $hostname = $_ENV['DB_HOSTNAME'];
+    $username = $_ENV['DB_USER'];
+    $password = $_ENV['DB_PASS'];
+    $database = $_ENV['DB_NAME'];
 
-    $formatted['name'] = $product->name;
-    $formatted['brand'] = $product->brand;
-    $formatted['description'] = $product->description;
-    $formatted['image'] = $product->image;
 
-    return $formatted;
+    $data = [];
+
+    if (!is_null($req_data)){
+        // Get the actual data from the object + arrays
+        $data = $req_data->data->products[0];
+    }
+
+    // Connect to the database
+    $db = mysqli_connect($hostname, $username, $password, $database);
+
+    if (!is_null($req_data)) {
+        // Check if the barcode already is in the database
+        $query = mysqli_query($db, "SELECT barcode FROM products WHERE barcode = '" . $barcode . "'");
+
+        $res = mysqli_fetch_row($query);
+
+        if ($res) {
+            // Update the amount
+            $result = mysqli_query($db, "UPDATE products SET amount = amount + 1 WHERE barcode = '" . $barcode . "'");
+            $response_text = "update";
+        } else {
+            // Add item to database
+            $result = mysqli_query($db, "INSERT INTO `products`(`barcode`, `name`, `brand`,`amount`) VALUES ('" . $barcode . "','" . $data->name . "','" . $data->brand . "',1)");
+            $response_text = " added!";
+        }
+    } else {
+        // Add barcode to database, unknown item
+        $result = mysqli_query($db, "INSERT INTO `products`(`barcode`,`amount`) VALUES ('" . $barcode . "',1)");
+        $response_text = "create";
+    }
+
+    // Close the database
+    mysqli_close($db);
+
+    // Unset variables
+    unset($hostname);
+    unset($username);
+    unset($password);
+    unset($database);
+
+    // If req_data is null, but there is a result -> barcode has been added, but 
+    if (is_null($req_data) && $result) {
+        response(300, "Item not found. Added barcode to database, but needs user input.");
+    } elseif ($result) {
+        if ($response_text == "update") {
+            response(200, "Item: " . $data->name . "found and updated.");
+        } elseif ($response_text == "create") {
+            response(201, "Item: " . $data->name . "added.");
+        }
+    } else {
+        response(400, "Data error, product not added.");
+    }
 }
