@@ -103,12 +103,11 @@ function send_product($req_data, $barcode)
         } else {
             // Add item to database
             $result = mysqli_query($db, "INSERT INTO `products`(`barcode`, `name`, `brand`,`amount`) VALUES ('" . $barcode . "','" . $data->name . "','" . $data->brand . "',1)");
-            $response_text = " added!";
+            $response_text = "create";
         }
     } else {
         // Add barcode to database, unknown item
         $result = mysqli_query($db, "INSERT INTO `products`(`barcode`,`amount`) VALUES ('" . $barcode . "',1)");
-        $response_text = "create";
     }
 
     // Close the database
@@ -125,9 +124,9 @@ function send_product($req_data, $barcode)
         response(300, "Item not found. Added barcode to database, but needs user input.");
     } elseif ($result) {
         if ($response_text == "update") {
-            response(200, "Item: " . $data->name . "found and updated.");
+            response(200, "Item: " . $data->name . " found in inventory! Updated amount.");
         } elseif ($response_text == "create") {
-            response(201, "Item: " . $data->name . "added.");
+            response(201, "Item: " . $data->name . " added.");
         }
     } else {
         response(400, "Data error, product not added.");
