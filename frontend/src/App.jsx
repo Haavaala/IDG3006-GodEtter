@@ -24,7 +24,7 @@ function App() {
           <div>
             <h3>{i.name != "" ? i.name : "Unknown"}</h3>
             <p>Brand: {i.brand != "" ? i.brand : "Unknown"}</p>
-            <p>Amount: {i.amount}</p>
+            <p>Amount: {i.quantity}</p>
             <p>Added: {i.date}</p>
           </div>
         );
