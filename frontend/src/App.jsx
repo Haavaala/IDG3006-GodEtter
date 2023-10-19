@@ -1,5 +1,6 @@
 import instance from "./instance";
 import { useState, useEffect } from "react";
+import './App.css'
 
 function App() {
   const [data, setData] = useState();
@@ -14,10 +15,7 @@ function App() {
 
     // Axios POST req til /get_device_inventory.php med deviceId i data
     instance
-      .post(
-        "/get_device_inventory.php",
-        { device_id: deviceId },
-      )
+      .post("/get_device_inventory.php", { device_id: deviceId })
       .then((res) => {
         setData(res.data.data);
       });
@@ -27,17 +25,19 @@ function App() {
   return (
     <>
       <h1>Fridge:</h1>
-      {data.map((i) => {
-        return (
-          <div>
-            <h3>{i.name != "" ? i.name : "Unknown"}</h3>
-            <p>Brand: {i.brand != "" ? i.brand : "Unknown"}</p>
-            <p>Amount: {i.quantity}</p>
-            <p>Added: {i.date}</p>
-            <p>Barcode: {i.barcode}</p>
-          </div>
-        );
-      })}
+      <section className="inventory">
+        {data.map((i) => {
+          return (
+            <div>
+              <h3>{i.name != "" ? i.name : "Unknown"}</h3>
+              <p>Brand: {i.brand != "" ? i.brand : "Unknown"}</p>
+              <p>Amount: {i.quantity}</p>
+              <p>Added: {i.date}</p>
+              <p>Barcode: {i.barcode}</p>
+            </div>
+          );
+        })}
+      </section>
     </>
   );
 }
