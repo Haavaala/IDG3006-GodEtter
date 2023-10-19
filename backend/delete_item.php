@@ -1,7 +1,7 @@
 <?php
 
 // Require common file
-require_once '../common.php';
+require_once './common.php';
 
 // Check for barcode & device_id in the request
 CheckSetValues(true, true);
