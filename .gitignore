@@ -26,3 +26,4 @@ dist-ssr
 backend/vendor
 backend/log
 backend/log/*
+backend/setup_server.php

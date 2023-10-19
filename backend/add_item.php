@@ -1,7 +1,7 @@
 <?php
 
 // Require common file
-require_once '../common.php';
+require_once './common.php';
 
 // Fix cors headers
 cors();

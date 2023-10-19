@@ -10,7 +10,6 @@ require_once './vendor/autoload.php';
 
 // Initialize dotenv and load .env file
 $envloc = "./";
-
 if (!file_exists($envloc . ".env")) {
     log_error("(CRITICAL) Environmental variable file was not found!",false);
     response(500, "Server error");

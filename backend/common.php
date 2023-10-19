@@ -95,6 +95,10 @@ function CheckSetValues($check_barcode, $check_device_id)
 // Function to log an error to file
 function log_error($string,$user_data)
 {
+    if (!isset($_ENV['LOG_FOLDER'])){
+        response(500,"Critical server error");
+        //exit;
+    }
     // Create date + time variables for logs
     $filedate = date('Y-m-d');
     $date = date('Y-m-d G:i:s', time());
