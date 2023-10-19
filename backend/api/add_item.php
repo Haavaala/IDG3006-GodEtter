@@ -1,19 +1,22 @@
 <?php
 
 // Require common file
-require_once 'common.php';
+require_once '../common.php';
 
+// Fix cors headers
 cors();
 
+// Check for barcode & device_id in the request
 CheckSetValues(true, true);
 
-// Get barcode + device_id & clean strings
+// Retrieve and sanitize strings
 $barcode = clean_string($_GET['barcode']);
 $device_id = clean_string($_POST['device_id']);
 
 // Run the API request
 barcode_req($barcode, $device_id);
 
+// Function for requesting barcode information from an API
 function barcode_req($barcode, $device_id)
 {
     // Get the API token key
@@ -55,15 +58,17 @@ function barcode_req($barcode, $device_id)
     }
 }
 
+// Function for sending an item to the database
 function send_item($req_data, $barcode, $device_id)
 {
+    // Initialize the database connection
     $db = new Database();
 
+    // Check if the API data (req_data) is not null
     if (!is_null($req_data)) {
-        // Get the actual data from the object + arrays
+        // Get the actual needed API data
         $data = $req_data->data->products[0];
-    }
-    if (!is_null($req_data)) {
+
         // Check if the barcode already is in the database
         $res = $db->run_query("SELECT barcode FROM items WHERE barcode = '" . $barcode . "'", true);
 
@@ -81,16 +86,19 @@ function send_item($req_data, $barcode, $device_id)
         $result = $db->run_query("INSERT INTO `items`(`barcode`,`quantity`,`device_id`) VALUES ('" . $barcode . "',1, " . $device_id . ")", false);
     }
 
-    // If req_data is null, but there is a result -> barcode has been added, but
+    
     if (is_null($req_data) && $result) {
+        // If req_data is null, but there is a result -> barcode has been added, but needs user input
         response(300, "Item not found. Added barcode to device inventory, but needs user input.");
     } elseif ($result) {
+        // If req_data is ok and there is a result, send response based on whether the item was updated or created.
         if ($response_text == "update") {
             response(200, "Item: " . $data->name . " found in device inventory! Updated quantity.");
         } elseif ($response_text == "create") {
             response(201, "Item: " . $data->name . " added.");
         }
     } else {
+        log_error("User DeviceID:" . $device_id . " tried to add item: " . $barcode . " to the database, but failed.",false);
         response(400, "Data error, item not added.");
     }
 }

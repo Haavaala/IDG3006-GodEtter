@@ -1,29 +1,11 @@
 <?php
-// Require composer autoload
-require_once './vendor/autoload.php';
 
-// Initialize dotenv and load .env file
-$dotenv = Dotenv\Dotenv::createImmutable('./');
-$dotenv->load();
+// Initial setup file for all scripts
+require_once("setup.php");
 
-// Require database
-require_once './class/class_database.php';
+// --------------------------------------------
+// :::::::: Common script functions
 
-// Check for local key
-if (!isset($_ENV['CONNECTION_KEY'])) {
-    response(500, "Server error");
-    exit;
-}
-
-if (!isset($_POST['key'])) {
-    response(401, "Unauthorized");
-    exit;
-}
-
-if ($_POST['key'] != $_ENV['CONNECTION_KEY']) {
-    response(401, "Unauthorized");
-    exit;
-}
 
 // Function to return a json response
 function response($status, $data)
@@ -39,7 +21,7 @@ function response($status, $data)
     echo json_encode($response);
 }
 
-// Function to clean a string
+// Function for sanitizing a string
 function clean_string($var)
 {
     $var = htmlentities($var, ENT_QUOTES);
@@ -50,11 +32,13 @@ function clean_string($var)
     return $var;
 }
 
+// Function to allow cors
 function cors()
 {
 
     // Allow from any origin
     if (isset($_SERVER['HTTP_ORIGIN'])) {
+        // ! - må se på ting her
         // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
         // you want to allow, and if so:
         header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -76,29 +60,86 @@ function cors()
     }
 }
 
+// Function to check if certain values are set
 function CheckSetValues($check_barcode, $check_device_id)
 {
+    // Check if API KEY is set
     if (!isset($_ENV['API_KEY'])) {
-        // Check if API key is set
+        log_error("(CRITICAL) API_KEY was not set as an enviromental variable!",false);
         response(500, "Server error");
         exit;
     }
 
+    // Check if API URL is set
     if (!isset($_ENV['API_URL'])) {
-        // Check if API url is set
+        log_error("(CRITICAL) API_URL was not set as an enviromental variable!",false);
         response(500, "Server error");
         exit;
     }
 
     if ($check_barcode) {
+        // Check if barcode is set by GET
         if (!isset($_GET['barcode']) || empty($_GET['barcode'])) {
             response(400, "Barcode not set", NULL);
         }
     }
 
     if ($check_device_id) {
+        // Check if device_id is set by POST
         if (!isset($_POST['device_id']) || empty($_POST['device_id'])) {
             response(400, "Device id not set");
         }
     }
+}
+
+// Function to log an error to file
+function log_error($string,$user_data)
+{
+    // Create date + time variables for logs
+    $filedate = date('Y-m-d');
+    $date = date('Y-m-d G:i:s', time());
+
+    // Retrieve the log folder
+    $log_folder = $_ENV['LOG_FOLDER'];
+
+    // Concatenate path variables to use
+    $folderpath = $log_folder . "/";
+    $filepath =  $folderpath . "/" . $filedate . ".txt";
+
+    // Set the error data to be outputted in the file
+    $error_data = "Error: " . $date . ": " . $string;
+
+    // Return user data with the error on request
+    if ($user_data){
+        // Get the remote addr + the http_x_forwarded_for if it is set
+        $r_ip = $_SERVER['REMOTE_ADDR'];
+
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
+            $f_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $f_ip = "-none-";
+        }
+
+        // Return this with the data
+        $error_data = "Error ". $date .": User (R_IP: ". $r_ip . " / F_IP: ". $f_ip . ") " . $string;
+    }
+
+    // Create the log folder if it does not exist
+    if (!file_exists($log_folder)) {
+        mkdir($log_folder);
+    }
+
+    // Append the old log file if it exists already
+    if (file_exists($filepath)) {
+        $oldfile = file_get_contents($filepath);
+        $error_data = $oldfile . "\n" . $error_data;
+    }
+
+    // Write the contents to file
+    file_put_contents($filepath, $error_data);
+
+    // Unset path variables
+    unset($log_folder);
+    unset($folderpath);
+    unset($filepath);
 }

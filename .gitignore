@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 */.env
 backend/vendor
+backend/log
+backend/log/*
