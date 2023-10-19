@@ -79,11 +79,21 @@ function send_item($req_data, $barcode, $device_id)
             $response_text = "create";
         }
     } else {
-        // Add barcode to database, unknown item
-        $result = $db->run_query("INSERT INTO `items`(`barcode`,`quantity`,`device_id`) VALUES ('" . $barcode . "',1, " . $device_id . ")", false);
+
+
+        // Check if the barcode already is in the database
+        $res = $db->run_query("SELECT barcode FROM items WHERE barcode = '" . $barcode . "'", true);
+
+        if ($res) {
+            // Update the quantity of the unknown item
+            $result = $db->run_query("UPDATE items SET quantity = quantity + 1 WHERE barcode = '" . $barcode . "' AND device_id = " . $device_id, false);
+        } else {
+            // Add barcode to database, unknown item
+            $result = $db->run_query("INSERT INTO `items`(`barcode`,`quantity`,`device_id`) VALUES ('" . $barcode . "',1, " . $device_id . ")", false);
+        }
     }
 
-    
+
     if (is_null($req_data) && $result) {
         // If req_data is null, but there is a result -> barcode has been added, but needs user input
         response(300, "Item not found. Added barcode to device inventory, but needs user input.");
@@ -95,7 +105,7 @@ function send_item($req_data, $barcode, $device_id)
             response(201, "Item: " . $data->name . " added.");
         }
     } else {
-        log_error("User DeviceID:" . $device_id . " tried to add item: " . $barcode . " to the database, but failed.",false);
+        log_error("User DeviceID:" . $device_id . " tried to add item: " . $barcode . " to the database, but failed.", false);
         response(400, "Data error, item not added.");
     }
 }

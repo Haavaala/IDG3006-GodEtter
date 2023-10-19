@@ -1,4 +1,4 @@
-import axios from "axios";
+import instance from "./instance";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -9,10 +9,18 @@ function App() {
   }, []);
 
   const retrieveData = () => {
-    axios.get(import.meta.env.VITE_API_URL).then((res) => {
-      setData(res.data.data);
-      console.log(data);
-    });
+    // Set device id
+    const deviceId = 1001;
+
+    // Axios POST req til /get_device_inventory.php med deviceId i data
+    instance
+      .post(
+        "/get_device_inventory.php",
+        { device_id: deviceId },
+      )
+      .then((res) => {
+        setData(res.data.data);
+      });
   };
   if (!data) return null;
 
@@ -26,6 +34,7 @@ function App() {
             <p>Brand: {i.brand != "" ? i.brand : "Unknown"}</p>
             <p>Amount: {i.quantity}</p>
             <p>Added: {i.date}</p>
+            <p>Barcode: {i.barcode}</p>
           </div>
         );
       })}
