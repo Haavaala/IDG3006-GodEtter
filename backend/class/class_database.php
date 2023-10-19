@@ -71,7 +71,7 @@ class Database
         $res = $this::$con->query($query);
 
         // If the query did not succeed, log the error with user data to keep track incase of a "malicious" query
-        if (!$res) {
+        if ($res) {
             log_error(" tried running query: \"" . $query . "\" on database, but failed. Database error: \"". $this::$con->error . "\"",true);
             response(500, "Server error");
             exit;

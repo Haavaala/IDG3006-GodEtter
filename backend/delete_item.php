@@ -3,9 +3,6 @@
 // Require common file
 require_once '../common.php';
 
-// Fix cors headers
-cors();
-
 // Check for barcode & device_id in the request
 CheckSetValues(true, true);
 

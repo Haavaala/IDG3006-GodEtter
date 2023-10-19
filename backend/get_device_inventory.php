@@ -3,9 +3,6 @@
 // Require common file
 require_once './common.php';
 
-// Fix cors headers
-cors();
-
 // Check for device_id in the request
 CheckSetValues(false, true);
 
