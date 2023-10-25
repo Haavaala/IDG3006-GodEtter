@@ -61,38 +61,48 @@ function send_item($req_data, $barcode, $device_id)
     // Initialize the database connection
     $db = new Database();
 
+    // Create initial $item variable with barcode and device_id for queries
+    $item = [
+        $device_id,
+        $barcode
+    ];
+
     // Check if the API data (req_data) is not null
     if (!is_null($req_data)) {
         // Get the actual needed API data
         $data = $req_data->data->products[0];
 
         // Check if the barcode already is in the database
-        $res = $db->run_query("SELECT barcode FROM items WHERE barcode = '" . $barcode . "'", true);
+        $res = $db->run_item_query("select", $item);
 
-        if ($res) {
+        if ($res->num_rows > 0) {
             // Update the quantity
-            $result = $db->run_query("UPDATE items SET quantity = quantity + 1 WHERE barcode = '" . $barcode . "' AND device_id = " . $device_id, false);
+            $result = $db->run_item_query("update_inc", $item);
             $response_text = "update";
         } else {
             // Add item to database
-            $result = $db->run_query("INSERT INTO `items`(`barcode`, `name`, `brand`,`quantity`, `device_id`) VALUES ('" . $barcode . "','" . $data->name . "','" . $data->brand . "',1," . $device_id . ")", false);
+            // Prepare data array
+            $prepared_data = [
+                $data->name,
+                $data->brand
+            ];
+            $result = $db->run_item_query("create_full", $item, $prepared_data);
             $response_text = "create";
         }
     } else {
 
 
         // Check if the barcode already is in the database
-        $res = $db->run_query("SELECT barcode FROM items WHERE barcode = '" . $barcode . "'", true);
+        $res = $db->run_item_query("select", $item);
 
-        if ($res) {
+        if ($res->num_rows > 0) {
             // Update the quantity of the unknown item
-            $result = $db->run_query("UPDATE items SET quantity = quantity + 1 WHERE barcode = '" . $barcode . "' AND device_id = " . $device_id, false);
+            $result = $db->run_item_query("update_inc", $item);
         } else {
             // Add barcode to database, unknown item
-            $result = $db->run_query("INSERT INTO `items`(`barcode`,`quantity`,`device_id`) VALUES ('" . $barcode . "',1, " . $device_id . ")", false);
+            $result = $db->run_item_query("create_unknown", $item);
         }
     }
-
 
     if (is_null($req_data) && $result) {
         // If req_data is null, but there is a result -> barcode has been added, but needs user input

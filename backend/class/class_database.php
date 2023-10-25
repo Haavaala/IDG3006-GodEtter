@@ -19,14 +19,14 @@ class Database
 
         // Check if the connection was created
         if (!$this::$con) {
-            log_error("User tried to connect to database, but the connection was not created!",false);
+            log_error("User tried to connect to database, but the connection was not created!", false);
             response(500, "Server error");
             exit;
         }
 
         // Check if the connection succeded
         if ($this::$con->connect_error) {
-            log_error("User tried to connect to database, but the connection could not be established." . mysqli_error($this::$con),false);
+            log_error("User tried to connect to database, but the connection could not be established." . mysqli_error($this::$con), false);
             response(500, "Server error");
             exit;
         }
@@ -37,7 +37,7 @@ class Database
         unset($password);
         unset($database);
     }
-    
+
     public function __destruct()
     {
         $this->disconnect();
@@ -63,26 +63,106 @@ class Database
         $var = mysqli_real_escape_string($this::$con, $var);
         return $var;
     }
-    
-    // Method for running a query on the database
-    public function run_query($query, $fetch_rows)
-    {
-        // Run the query
-        $res = $this::$con->query($query);
 
-        // If the query did not succeed, log the error with user data to keep track incase of a "malicious" query
-        if ($res) {
-            log_error(" tried running query: \"" . $query . "\" on database, but failed. Database error: \"". $this::$con->error . "\"",true);
-            response(500, "Server error");
+    // Method for running a database query on the items
+    public function run_item_query($type, $item, $data = [])
+    {
+        // Initialize variables
+        $query = "";
+        $param = "";
+
+        // Check what type of item query is requested, set SQL query strings and bind params based on this.
+        switch ($type) {
+                // Query for selecting items
+            case "select":
+                $query = "SELECT barcode FROM items WHERE device_id = ? AND barcode = ?";
+                $param = "is";
+                break;
+                // Query for creating item with full data
+            case "create_full":
+                $query = "INSERT INTO `items`(`device_id`, `barcode`, `name`, `brand`,`quantity`) VALUES (?, ?, ?, ?, 1)";
+                $param = "isss";
+                break;
+                // Query for creating item with barcode only
+            case "create_unknown":
+                $query = "INSERT INTO `items`(`device_id`, `barcode`, `quantity`) VALUES (?, ?, 1)";
+                $param = "is";
+                break;
+                // Query for deleting items
+            case "delete":
+                $query = "DELETE FROM items WHERE device_id = ? AND barcode = ?";
+                $param = "is";
+                break;
+                // Query for updating an item by increasing the quantity
+            case "update_inc":
+                $query = "UPDATE items SET quantity = quantity + 1 WHERE device_id = ? AND barcode = ?";
+                $param = "is";
+                break;
+                // Query for updating an item by decreasing the quantity
+            case "update_dec":
+                $query = "UPDATE items SET quantity = quantity - 1 WHERE device_id = ? AND barcode = ?";
+                $param = "is";
+                break;
+        }
+
+        // If data is submitted, merge the arrays as one
+        if (count($data) > 0) {
+            $item = array_merge($item, $data);
+        }
+
+        // Prepare the statement
+        $statement = $this::$con->prepare($query);
+
+        // Bind the params and the array with the data to the statement
+        $statement->bind_param($param, ...$item);
+
+        // Execute the statement
+        if (!$statement->execute()) {
+            // If the statement failed to execute, log the error and send response to user
+            log_error($statement->error, true);
+            response(400, "Server error");
             exit;
         }
 
-        // If fetch_rows is set to true, fetch the rows from the retrieved data
-        if ($fetch_rows) {
-            $result = mysqli_fetch_row($res);
-        } else {
-            $result = $res;
+        // Based on what type was originally selected, either select the result or the affected rows to return later.
+        if ($type == "select" or $type == "create_full" or $type == "create_unknown") {
+            $result = $statement->get_result();
+        } elseif ($type == "update_inc" or $type == "update_dec" or $type == "delete") {
+            $result = $statement->affected_rows;
         }
+
+        // Close the statement
+        $statement->close();
+
+        // Return the selected result
+        return $result;
+    }
+
+    // Method for getting the full inventory from the database
+    public function run_get_inventory($device_id)
+    {
+        // Query to get all items from one device's inventory
+        $query = "SELECT barcode, name, brand, quantity, date from items WHERE device_id = ?";
+
+        // Prepare the statement
+        $statement = $this::$con->prepare($query);
+
+        // Bind the param for one INT variable, the device id
+        $statement->bind_param("i", $device_id);
+
+        // Execute the statement
+        if (!$statement->execute()) {
+            // If the statement failed to execute, log the error and send response to user
+            log_error($statement->error, true);
+            response(400, "Server error");
+            exit;
+        }
+
+        // Get the result from the query
+        $result = $statement->get_result();
+
+        // Close the statement
+        $statement->close();
 
         // Return the result
         return $result;
