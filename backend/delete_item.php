@@ -16,8 +16,6 @@ delete_item($barcode, $device_id);
 // Function to delete an item from the database
 function delete_item($barcode, $device_id)
 {
-    // Set data_error variable to false at start
-    $data_error = false;
 
     // Initialize the database connection
     $db = new Database();
@@ -28,10 +26,20 @@ function delete_item($barcode, $device_id)
         $barcode
     ];
 
-    // Check if the barcode has more than one amount
+    // Check if the barcode is in the inventory
     $result = $db->run_item_query("select", $item);
+    // Fetch the associative array
+    $result = $result->fetch_assoc();
 
-    if ($result->num_rows > 1) {
+    // Verify that the result succeeded
+    if (!$result) {
+        log_error("User DeviceID:" . $device_id . " tried to delete item from database: " . $barcode . ", but failed!", false);
+        response(400, "Error when trying to delete item.");
+        exit;
+    }
+
+
+    if ($result['quantity'] > 1) {
         // Decrement quantity from the inventory
         $res = $db->run_item_query("update_dec", $item);
 
@@ -43,7 +51,7 @@ function delete_item($barcode, $device_id)
             response(400, "Could not decrement quantity of item.");
             exit;
         }
-    } elseif ($result->num_rows > 0) {
+    } elseif ($result['quantity'] < 1) {
         $res = $db->run_item_query("delete", $item);
 
         if ($res) {
@@ -53,5 +61,6 @@ function delete_item($barcode, $device_id)
     } else {
         log_error("User DeviceID:" . $device_id . " tried to delete item from database: " . $barcode . ", but failed!", false);
         response(400, "Error when trying to delete item.");
+        exit;
     }
 }

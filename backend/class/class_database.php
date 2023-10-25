@@ -75,7 +75,7 @@ class Database
         switch ($type) {
                 // Query for selecting items
             case "select":
-                $query = "SELECT barcode FROM items WHERE device_id = ? AND barcode = ?";
+                $query = "SELECT barcode, quantity FROM items WHERE device_id = ? AND barcode = ?";
                 $param = "is";
                 break;
                 // Query for creating item with full data
