@@ -1,11 +1,27 @@
+:root {
+  --black: #1a1a1a;
+  --dark_grey: #6d6d6d;
+  --light_grey: #cdcdcd;
+  --white: #eef0eb;
+  --green: #a8c695;
+  --blue: #9196c8;
+  --brown: #deb393;
+  --error: #9e2020;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .inventory {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background-color: brown;
-    color: aquamarine;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: var(--blue);
+  color: var(--brown);
 }
 
 .inventory > * {
-    border: 1px solid yellow;
-    padding: 2em;
+  border: 1px solid var(--green);
+  padding: 2em;
 }
