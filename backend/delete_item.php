@@ -38,7 +38,6 @@ function delete_item($barcode, $device_id)
         exit;
     }
 
-
     if ($result['quantity'] > 1) {
         // Decrement quantity from the inventory
         $res = $db->run_item_query("update_dec", $item);
@@ -51,7 +50,7 @@ function delete_item($barcode, $device_id)
             response(400, "Could not decrement quantity of item.");
             exit;
         }
-    } elseif ($result['quantity'] < 1) {
+    } elseif ($result['quantity'] <= 1) {
         $res = $db->run_item_query("delete", $item);
 
         if ($res) {

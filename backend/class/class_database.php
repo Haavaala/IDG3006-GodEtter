@@ -125,9 +125,9 @@ class Database
         }
 
         // Based on what type was originally selected, either select the result or the affected rows to return later.
-        if ($type == "select" or $type == "create_full" or $type == "create_unknown") {
+        if ($type == "select") {
             $result = $statement->get_result();
-        } elseif ($type == "update_inc" or $type == "update_dec" or $type == "delete") {
+        } else {
             $result = $statement->affected_rows;
         }
 
