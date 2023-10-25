@@ -98,15 +98,23 @@ function send_item($req_data, $barcode, $device_id)
         if ($res->num_rows > 0) {
             // Update the quantity of the unknown item
             $result = $db->run_item_query("update_inc", $item);
+            $response_text = "update";
         } else {
             // Add barcode to database, unknown item
             $result = $db->run_item_query("create_unknown", $item);
+            $response_text = "create";
         }
     }
 
     if (is_null($req_data) && $result) {
         // If req_data is null, but there is a result -> barcode has been added, but needs user input
-        response(300, "Item not found. Added barcode to device inventory, but needs user input.");
+        
+
+        if ($response_text == "update") {
+            response(300, "Updated quantity of unknown item.");
+        } elseif ($response_text == "create") {
+            response(300, "Item not found. Added barcode to device inventory, but needs user input.");
+        }
     } elseif ($result) {
         // If req_data is ok and there is a result, send response based on whether the item was updated or created.
         if ($response_text == "update") {
