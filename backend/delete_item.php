@@ -16,49 +16,50 @@ delete_item($barcode, $device_id);
 // Function to delete an item from the database
 function delete_item($barcode, $device_id)
 {
-    // Set data_error variable to false at start
-    $data_error = false;
 
     // Initialize the database connection
     $db = new Database();
 
-    // Check if the barcode has more than one amount
-    $result = $db->run_query("SELECT * FROM items WHERE device_id =" . $device_id . " AND barcode = '" . $barcode . "' AND quantity > 1", true);
+    // Create initial $item variable with barcode and device_id for queries
+    $item = [
+        $device_id,
+        $barcode
+    ];
 
-    if ($result) {
+    // Check if the barcode is in the inventory
+    $result = $db->run_item_query("select", $item);
+    // Fetch the associative array
+    $result = $result->fetch_assoc();
+
+    // Verify that the result succeeded
+    if (!$result) {
+        log_error("User DeviceID:" . $device_id . " tried to delete item from database: " . $barcode . ", but failed!", false);
+        response(400, "Error when trying to delete item.");
+        exit;
+    }
+
+    if ($result['quantity'] > 1) {
         // Decrement quantity from the inventory
-        $result2 = $db->run_query("UPDATE items SET quantity = quantity - 1 WHERE device_id =" . $device_id . " AND barcode = '" . $barcode . "' ", false);
+        $res = $db->run_item_query("update_dec", $item);
 
-        if ($result2) {
+        if ($res) {
             response(200, "Deleted one amount of item from inventory.");
             exit;
         } else {
-            log_error("User DeviceID:" . $device_id . " tried to decrement quantity of item: " . $barcode . ", but failed!",false);
+            log_error("User DeviceID:" . $device_id . " tried to decrement quantity of item: " . $barcode . ", but failed!", false);
             response(400, "Could not decrement quantity of item.");
             exit;
         }
-    } else {
-        // Check if there is one item left, if so delete the item entirely from the database
-        $result2 = $db->run_query("SELECT * FROM items WHERE device_id =" . $device_id . " AND barcode = '" . $barcode . "' AND quantity > 0", true);
+    } elseif ($result['quantity'] <= 1) {
+        $res = $db->run_item_query("delete", $item);
 
-        if ($result2) {
-            $result3 = $db->run_query("DELETE FROM items WHERE barcode =
-             '" . $barcode . "' AND device_id = " . $device_id, false);
-
-            if ($result3) {
-                response(200, "Deleted last amount of item from inventory!");
-            } else {
-                log_error("User DeviceID:" . $device_id . " tried to delete item from database: " . $barcode . ", but failed!",false);
-                response(400, "Error when trying to delete item.");
-            }
-
-            exit;
-        } else {
-            response(400, "Item not found!");
+        if ($res) {
+            response(200, "Deleted last amount of item from inventory!");
             exit;
         }
-    }
-
-    if ($data_error) {
+    } else {
+        log_error("User DeviceID:" . $device_id . " tried to delete item from database: " . $barcode . ", but failed!", false);
+        response(400, "Error when trying to delete item.");
+        exit;
     }
 }
