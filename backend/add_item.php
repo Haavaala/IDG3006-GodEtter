@@ -70,7 +70,24 @@ function send_item($req_data, $barcode, $device_id)
     // Check if the API data (req_data) is not null
     if (!is_null($req_data)) {
         // Get the actual needed API data
-        $data = $req_data->data->products[0];
+        $data_length = count($req_data->data->products) - 1;
+
+        $data = $req_data->data->products[$data_length];
+
+        $data_allergens = $req_data->data->allergens;
+
+        $allergens = "";
+
+        // Add all allergens from the data table into one string to store
+        foreach($data_allergens as $a){
+            if ($a->contains == "YES"){
+                if ($allergens != ""){
+                    $allergens = $allergens + ", " + $a->display_name;
+                } else {
+                    $allergens = $a->display_name;
+                }
+            }
+        }
 
         // Check if the barcode already is in the database
         $res = $db->run_item_query("select", $item);
@@ -84,14 +101,15 @@ function send_item($req_data, $barcode, $device_id)
             // Prepare data array
             $prepared_data = [
                 $data->name,
-                $data->brand
+                $data->brand,
+                $data->weight,
+                $data->weight_unit,
+                $allergens
             ];
             $result = $db->run_item_query("create_full", $item, $prepared_data);
             $response_text = "create";
         }
     } else {
-
-
         // Check if the barcode already is in the database
         $res = $db->run_item_query("select", $item);
 

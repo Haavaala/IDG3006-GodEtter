@@ -21,7 +21,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 };
 
 // Check if there are entries, and return data
-if ($data) {
+if (isset($data)) {
     response(200, $data);
 } else {
     log_error("User DeviceID: " . $device_id . " tried to get the whole inventory, but failed!", false);
