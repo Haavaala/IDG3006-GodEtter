@@ -80,8 +80,8 @@ class Database
                 break;
                 // Query for creating item with full data
             case "create_full":
-                $query = "INSERT INTO `items`(`device_id`, `barcode`, `name`, `brand`,`quantity`) VALUES (?, ?, ?, ?, 1)";
-                $param = "isss";
+                $query = "INSERT INTO `items`(`device_id`, `barcode`, `name`, `brand`,`weight`, `weight_unit`,`allergens`,`quantity`) VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
+                $param = "isssiss";
                 break;
                 // Query for creating item with barcode only
             case "create_unknown":
@@ -142,7 +142,7 @@ class Database
     public function run_get_inventory($device_id)
     {
         // Query to get all items from one device's inventory
-        $query = "SELECT barcode, name, brand, quantity, date from items WHERE device_id = ?";
+        $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, quantity, date_added, date_bestbefore, date_bestby from items WHERE device_id = ?";
 
         // Prepare the statement
         $statement = $this::$con->prepare($query);
