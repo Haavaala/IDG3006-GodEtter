@@ -1,6 +1,7 @@
 import instance from "./instance";
 import { useState, useEffect } from "react";
 import './App.css'
+import Navbar from "./Components/Navbar/Navbar";
 
 function App() {
   const [data, setData] = useState();
@@ -38,6 +39,7 @@ function App() {
           );
         })}
       </section>
+      <Navbar></Navbar>
     </>
   );
 }
