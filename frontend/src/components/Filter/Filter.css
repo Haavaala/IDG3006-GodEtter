@@ -1,0 +1,22 @@
+.filter-container{
+    max-width: 100vh;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    height: 3vh;
+}
+
+.filterButton{
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    border: none;
+    height: 1.7rem;
+    border-radius: 5px;
+}

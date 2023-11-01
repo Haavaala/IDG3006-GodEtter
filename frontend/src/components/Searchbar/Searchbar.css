@@ -1,0 +1,29 @@
+.search{
+    width: 100vw;
+    /* height: 10vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-box {
+    width: 90vw;
+    background-color: var(--light_grey);
+    border: none;
+    border-bottom: 5px solid var(--black);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 5px;
+}
+
+.input-field{
+    /* width: 90vw; */
+    background-color: var(--light_grey);
+    border: none;
+    /* border-bottom: 5px solid var(--black); */
+    /* border-radius: 5px; */
+    height: 3vh;
+}
+
