@@ -53,6 +53,23 @@ nav {
     width: 220%;
     /* transition: 1s; */
   }
+
+  ul li svg path {
+    stroke: var(--white);
+  }
+
+  ul li.active svg path {
+    stroke: var(--black);
+  }
+
+  ul li:nth-child(2) svg path {
+    fill: var(--white);
+  }
+
+  ul li:nth-child(2).active svg path {
+    fill: var(--black);
+  }
+
   
   li > svg {
     margin-right: 0.5rem;

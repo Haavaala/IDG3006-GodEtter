@@ -2,14 +2,13 @@ import instance from "../instance";
 import { useState, useEffect } from "react";
 import '../App.css';
 import InventoryCard from '../components/InventoryCard/InventoryCard';
-import Navbar from '../components/Navbar/Navbar';
 import Searchbar from '../components/Searchbar/Searchbar';
 import Stroke from '../components/Stroke/Stroke';
 import Filter from '../components/Filter/Filter';
 import TopMenu from "../components/TopMenu/TopMenu";
 
 
-function App() {
+function InventoryPage() {
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -62,4 +61,4 @@ function App() {
   );
 }
 
-export default App;
+export default InventoryPage;
