@@ -1,16 +1,16 @@
 import React from 'react'
-import './Filter.css'
+import './filter.css'
+import FilterButton from './FilterButton'
 
 function Filter() {
 
+    // Hente kategori fra database
     const buttonText = ["Meieri", "Frukt", "Grønnsaker", "kjøtt", "Bakeri"]
     
   return (
     <div className='filter-container'>
-        {buttonText.map((text, index) => (
-          <button key={index} className='filterButton'>
-            {text}
-          </button>  
+        {buttonText.map((category, index) => (
+          <FilterButton key={index} filterText={category}/>
         ))}
     </div>
   )
