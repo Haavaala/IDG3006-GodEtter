@@ -78,10 +78,12 @@ function send_item($req_data, $barcode, $device_id)
 
         $allergens = "";
         $weight = -1;
+        $weight_unit = "";
 
         // 01.11 - Check to see if weight is null, if so fix it for the database
         if (!is_null($data->weight)){
             $weight = $data->weight;
+            $weight_unit = $data->weight_unit;
         }
 
         // Add all allergens from the data table into one string to store
@@ -109,7 +111,7 @@ function send_item($req_data, $barcode, $device_id)
                 $data->name,
                 $data->brand,
                 $weight,
-                $data->weight_unit,
+                $weight_unit,
                 $allergens
             ];
             $result = $db->run_item_query("create_full", $item, $prepared_data);
