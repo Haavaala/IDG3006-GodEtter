@@ -7,6 +7,21 @@
   --blue: #9196c8;
   --brown: #deb393;
   --error: #9e2020;
+  --baby_peach: #E8AF90;
+}
+
+@font-face {
+  font-family: 'Loos Normal';
+  src: local('assets/fonts/loos-normal-regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Loos Normal';
+  src: local('assets/fonts/loos-normal-light.otf');
+  font-weight: lighter;
+  font-style: normal;
 }
 
 * {
@@ -14,7 +29,40 @@
   padding: 0;
 }
 
-.inventory {
+body {
+  color: var(--black);
+}
+
+/* h1, h2, h3 {
+  margin: 13px;
+} */
+
+h1 {
+  font-family: "Young Serif", serif;
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 16px;
+  font-family: "Loos Normal";
+  font-weight: normal;
+}
+
+.smallp {
+  font-size: 12px;
+  font-family: "Loos Normal";
+  font-weight: lighter;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* .inventory {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   background-color: var(--blue);
@@ -24,4 +72,6 @@
 .inventory > * {
   border: 1px solid var(--green);
   padding: 2em;
-}
+} */
+
+

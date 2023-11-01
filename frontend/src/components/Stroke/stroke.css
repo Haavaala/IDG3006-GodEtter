@@ -1,0 +1,11 @@
+.stroke__container {
+    padding: 13px;
+}
+.stroke {
+    background-color: var(--black);
+    outline-style: solid;
+    outline-color: var(--black);
+    outline-width: 2px;
+    /* outline-offset: -1px; */
+    border-radius: 4px;
+}

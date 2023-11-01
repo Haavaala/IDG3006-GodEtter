@@ -1,0 +1,88 @@
+.inventoryCard__container {
+    font-size: 12;
+    font-weight: 360;
+    text-align: "left";
+    margin: 20px;
+    border: 2px solid var(--black);
+    border-radius: 6px;
+    height: min-content;
+    width: calc(40% - 10px);
+    max-width: 40%;
+    /* flex: 1; */
+    flex: 1 1 auto;
+}
+
+.inventoryCard__stroke--horizontal {
+    background-color: var(--black);
+    outline-style: solid;
+    outline-color: var(--black);
+    outline-width: .25px;
+    /* outline-offset: -1px; */
+    border-radius: 4px;
+}
+
+.inventoryCard__stroke--vertical {
+    background-color: var(--black);
+    outline-style: solid;
+    outline-color: var(--black);
+    outline-width: .25px;
+    /* outline-offset: -1px; */
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.inventoryCard__titleBox {
+    border-left: 2px solid var(--black);
+    display: flex;
+    justify-content: space-between;
+    width: 86%;
+    height: 80px;
+}
+
+.inventoryCard__titleBox p {
+    margin: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inventoryCard__numberBox {
+    background-color: var(--baby_peach);
+    padding: 0 5px;
+    border-left: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    border-radius: 4px;
+    width: "max-content";
+    height: min-content;
+}
+
+.inventoryCard__firstPartContainer {
+    display: flex;
+}
+
+.inventoryCard__firstPartContainer img {
+    padding: 10px;
+}
+
+.inventoryCard__details {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inventoryCard__details--icons svg {
+    margin: 0 5px;
+}
+
+.inventoryCard__details--arrow button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
