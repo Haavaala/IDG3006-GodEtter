@@ -9,7 +9,13 @@ import TopMenu from "../components/TopMenu/TopMenu";
 
 
 function InventoryPage() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+
+
+  const filteredData = data.filter((item) =>
+  item.name.toLowerCase().includes(searchInput.toLowerCase())
+);
 
   useEffect(() => {
     retrieveData();
@@ -33,7 +39,7 @@ function InventoryPage() {
       <TopMenu />
       <h1 className="text-center">Ditt kjøleskap</h1>
       <Stroke />
-      <Searchbar />
+      <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
       <Filter />
       <Stroke />
@@ -51,10 +57,15 @@ function InventoryPage() {
         })}
       </section> */}
 
-      <div style={{display: 'flex', flexWrap: 'wrap'}}>
-        <InventoryCard /> 
-        <InventoryCard title="Coop Pizza med store Pepperoni"/>
-        <InventoryCard title="Coop Pizza"/>
+<div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {filteredData.map((item, index) => (
+          <InventoryCard
+            key={index}
+            title={item.name}
+          />
+        ))}
+        {/* <InventoryCard title="Coop Pizza med store Pepperoni" />
+        <InventoryCard title="Coop Pizza" /> */}
       </div>
 
     </>
