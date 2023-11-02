@@ -10,7 +10,6 @@ function Navbar() {
   };
 
   useEffect(() => {
-    // Add any additional logic here to handle the initial active item
   }, []);
 
   return (
