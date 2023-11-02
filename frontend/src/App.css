@@ -33,17 +33,17 @@ body {
   color: var(--black);
 }
 
-/* h1, h2, h3 {
-  margin: 13px;
-} */
+h1, h2, h3 {
+  font-family: "Young Serif", serif;
+}
 
 h1 {
-  font-family: "Young Serif", serif;
   font-size: 36px;
 }
 
 h2 {
   font-size: 24px;
+  margin: 0 20px;
 }
 
 p {

@@ -19,4 +19,17 @@
     border: none;
     height: 1.7rem;
     border-radius: 5px;
+    gap: 10px;
+}
+
+.filterButton.active {
+    background-color: var(--black);
+}
+
+.filterIcon {
+    font-size: 18px;
+}
+
+.filterText {
+    font-size: 12px;
 }

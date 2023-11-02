@@ -1,11 +1,11 @@
 import instance from "../instance";
 import { useState, useEffect } from "react";
 import '../App.css';
-import InventoryCard from '../components/InventoryCard/InventoryCard';
 import Searchbar from '../components/Searchbar/Searchbar';
 import Stroke from '../components/Stroke/Stroke';
 import Filter from '../components/Filter/Filter';
 import TopMenu from "../components/TopMenu/TopMenu";
+import Inventory from "../components/Inventory/Inventory";
 
 
 function InventoryPage() {
@@ -36,7 +36,8 @@ function InventoryPage() {
       <Searchbar />
       <Stroke />
       <Filter />
-      <Stroke />
+      <Inventory />
+
       {/* <section className="inventory">
         {data.map((i) => {
           return (
@@ -50,12 +51,6 @@ function InventoryPage() {
           );
         })}
       </section> */}
-
-      <div style={{display: 'flex', flexWrap: 'wrap'}}>
-        <InventoryCard /> 
-        <InventoryCard title="Coop Pizza med store Pepperoni"/>
-        <InventoryCard title="Coop Pizza"/>
-      </div>
 
     </>
   );
