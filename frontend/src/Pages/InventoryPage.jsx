@@ -12,7 +12,7 @@ function InventoryPage() {
   const [data, setData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
 
-
+//filter the item by names and check if the search words are the same as item name
   const filteredData = data.filter((item) =>
   item.name.toLowerCase().includes(searchInput.toLowerCase())
 );
