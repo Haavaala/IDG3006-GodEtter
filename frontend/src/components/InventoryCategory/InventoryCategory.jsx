@@ -54,6 +54,7 @@ export default function InventoryCategory({category, category_id}) {
             dateScanned={i.date_added}
             allergens={i.allergens}
             brand={i.brand}
+            barcode={i.barcode}
             />
           );
           })}
