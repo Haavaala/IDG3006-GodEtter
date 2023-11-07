@@ -19,7 +19,6 @@ function Searchbar({ searchInput, setSearchInput }) {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
-        {/* <button type="reset"></button> */}
       </form>
     </div>
   </div>
