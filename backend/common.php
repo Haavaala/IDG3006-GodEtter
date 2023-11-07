@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 // Initial setup file for all scripts
-require_once("setup.php");
+require_once("setup_server.php");
 
 // --------------------------------------------
 // :::::::: Common script functions
@@ -44,7 +44,7 @@ function response($status, $data)
 // Function for sanitizing a string
 function clean_string($var)
 {
-    $var = htmlentities($var, ENT_QUOTES);
+    //$var = htmlentities($var, ENT_QUOTES);
     $var = strip_tags($var);
     $var = stripslashes($var);
     $invalid_characters = array("$", "%", "#", "<", ">", "|");
@@ -53,7 +53,7 @@ function clean_string($var)
 }
 
 // Function to check if certain values are set
-function CheckSetValues($check_barcode, $check_device_id)
+function CheckSetValues($check_barcode = false, $check_device_id = false, $check_category = false)
 {
     // Check if API KEY is set
     if (!isset($_ENV['API_KEY'])) {
@@ -80,6 +80,13 @@ function CheckSetValues($check_barcode, $check_device_id)
         // Check if device_id is set by POST
         if (!isset($_POST['device_id']) || empty($_POST['device_id'])) {
             response(400, "Device id not set");
+        }
+    }
+
+    if ($check_category) {
+        // Check if category is set by POST
+        if (!isset($_GET['category']) || empty($_GET['category'])) {
+            response(400, "Category not set");
         }
     }
 }

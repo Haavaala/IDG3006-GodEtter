@@ -80,8 +80,8 @@ class Database
                 break;
                 // Query for creating item with full data
             case "create_full":
-                $query = "INSERT INTO `items`(`device_id`, `barcode`, `name`, `brand`,`weight`, `weight_unit`,`allergens`,`quantity`) VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
-                $param = "isssiss";
+                $query = "INSERT INTO `items`(`device_id`, `barcode`, `name`, `brand`,`weight`, `weight_unit`,`allergens`,`quantity`,`category_id`) VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)";
+                $param = "isssissi";
                 break;
                 // Query for creating item with barcode only
             case "create_unknown":
@@ -139,16 +139,53 @@ class Database
     }
 
     // Method for getting the full inventory from the database
-    public function run_get_inventory($device_id)
+    public function run_get_inventory($device_id, $category = false)
     {
-        // Query to get all items from one device's inventory
-        $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, quantity, date_added, date_bestbefore, date_bestby from items WHERE device_id = ?";
-
+        if (!$category){
+            // Query to get all items from one device's inventory
+            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, quantity, date_added, date_bestbefore, date_bestby, category_id from items WHERE device_id = ? ORDER BY date_added DESC";
+        } else {
+            // Find items by category
+            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, quantity, date_added, date_bestbefore, date_bestby from items WHERE device_id = ? AND category_id = ? ORDER BY date_added DESC";
+        }
         // Prepare the statement
         $statement = $this::$con->prepare($query);
 
-        // Bind the param for one INT variable, the device id
-        $statement->bind_param("i", $device_id);
+        
+        if (!$category){
+            // Bind the param for one INT variable, the device id
+            $statement->bind_param("i", $device_id);
+        } else {
+            // Bind for device id and category
+            $statement->bind_param("ii", $device_id, $category);
+        }
+
+        // Execute the statement
+        if (!$statement->execute()) {
+            // If the statement failed to execute, log the error and send response to user
+            log_error($statement->error, true);
+            response(400, "Server error");
+            exit;
+        }
+
+        // Get the result from the query
+        $result = $statement->get_result();
+
+        // Close the statement
+        $statement->close();
+
+        // Return the result
+        return $result;
+    }
+
+    // Method for getting all categories from the database
+    public function run_get_categories()
+    {
+        // Query to get all categories
+        $query = "SELECT * from categories";
+
+        // Prepare the statement
+        $statement = $this::$con->prepare($query);
 
         // Execute the statement
         if (!$statement->execute()) {
