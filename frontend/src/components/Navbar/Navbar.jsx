@@ -3,7 +3,7 @@ import './Navbar.css';
 import { Link } from 'react-router-dom'
 
 function Navbar() {
-  const [activeItem, setActiveItem] = useState(null);
+  const [activeItem, setActiveItem] = useState(0);
 
   const handleItemClick = (index) => {
     setActiveItem(index);
