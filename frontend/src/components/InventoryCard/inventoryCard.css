@@ -1,11 +1,11 @@
 .inventoryCard__container {
     text-align: "left";
-    margin: 20px;
+    margin: 4px;
     border: 2px solid var(--black);
     border-radius: 6px;
     height: min-content;
-    width: calc(40% - 10px);
-    max-width: 40%;
+    width: calc(50% - 4px);
+    max-width: 46%;
     /* flex: 1; */
     flex: 1 1 auto;
 }

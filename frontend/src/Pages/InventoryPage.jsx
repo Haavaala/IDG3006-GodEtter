@@ -10,6 +10,7 @@ import Inventory from "../components/Inventory/Inventory";
 function InventoryPage() {
   const [data, setData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [loading, setLoading] = useState(true)
 
   const searchedData = data.filter((item) =>
     item.name.toLowerCase().includes(searchInput.toLowerCase())
@@ -27,10 +28,15 @@ function InventoryPage() {
       .post("/get_device_inventory.php", { device_id: deviceId })
       .then((res) => {
         setData(res.data.data);
+        setLoading(false)
       });
   };
   if (!data) return null;
 
+  if(loading){
+    console.log("LASTER");
+    return <p>Laster...</p>
+  }
   return (
     <>
       <TopMenu />
