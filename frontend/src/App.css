@@ -8,6 +8,8 @@
   --brown: #deb393;
   --error: #9e2020;
   --baby_peach: #E8AF90;
+  --peach: #BD6F4E;
+  --baby_waluigi: #B0B4DF;
 }
 
 @font-face {
@@ -60,6 +62,20 @@ p {
 
 .text-center {
   text-align: center;
+}
+
+.grid__twoColumn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.medium {
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.underline {
+  text-decoration: underline; 
 }
 
 /* .inventory {

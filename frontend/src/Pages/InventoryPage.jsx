@@ -1,16 +1,19 @@
 import instance from "../instance";
 import { useState, useEffect } from "react";
-import '../App.css';
-import Searchbar from '../components/Searchbar/Searchbar';
-import Stroke from '../components/Stroke/Stroke';
-import Filter from '../components/Filter/Filter';
+import "../App.css";
+import Searchbar from "../components/Searchbar/Searchbar";
+import Stroke from "../components/Stroke/Stroke";
+import Filter from "../components/Filter/Filter";
 import TopMenu from "../components/TopMenu/TopMenu";
 import Inventory from "../components/Inventory/Inventory";
 
-
 function InventoryPage() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
+  const searchedData = data.filter((item) =>
+    item.name.toLowerCase().includes(searchInput.toLowerCase())
+  );
   useEffect(() => {
     retrieveData();
   }, []);
@@ -33,10 +36,12 @@ function InventoryPage() {
       <TopMenu />
       <h1 className="text-center">Ditt kjøleskap</h1>
       <Stroke />
-      <Searchbar />
+      <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
       <Filter />
-      <Inventory />
+      {searchedData.map((item, index) => (
+        <Inventory key={index} title={item.name} />
+      ))}
 
       {/* <section className="inventory">
         {data.map((i) => {
@@ -51,7 +56,6 @@ function InventoryPage() {
           );
         })}
       </section> */}
-
     </>
   );
 }
