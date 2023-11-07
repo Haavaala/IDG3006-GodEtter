@@ -4,6 +4,13 @@ import './searchbar.css'
 
 
 function Searchbar({ searchInput, setSearchInput }) {
+
+  const handleInputChange = (e) => {
+    const newSearchInput = e.target.value;
+    console.log('Search Input:', newSearchInput);
+    setSearchInput(newSearchInput);
+  };
+
   return (
   <div className="search">
     <div className="search-box">
@@ -15,9 +22,9 @@ function Searchbar({ searchInput, setSearchInput }) {
         <input
           className='input-field'
           type="text"
-          placeholder="Search"
+          placeholder="Søk"
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
+          onChange={handleInputChange}
         />
       </form>
     </div>

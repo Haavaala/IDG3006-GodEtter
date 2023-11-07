@@ -9,13 +9,19 @@ import Inventory from "../components/Inventory/Inventory";
 
 function InventoryPage() {
   const [data, setData] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(true)
 
   const searchedData = data.filter((item) =>
     item.name.toLowerCase().includes(searchInput.toLowerCase())
+    // console.log(item.name)
+    
   );
+
+  console.log('Search Results:', searchedData);
+
   useEffect(() => {
+    console.log("useEffect in this component was triggered");
     retrieveData();
   }, []);
 
@@ -47,6 +53,7 @@ function InventoryPage() {
       <Filter />
       {searchedData.map((item, index) => (
         <Inventory key={index} title={item.name} />
+
       ))}
 
       {/* <section className="inventory">
