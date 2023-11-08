@@ -45,9 +45,10 @@ function InventoryPage() {
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
       <Filter />
-      {searchedData.map((item, index) => (
+      {/* {searchedData.map((item, index) => (
         <Inventory key={index} title={item.name} />
-      ))}
+      ))} */}
+      <Inventory/>
 
       {/* <section className="inventory">
         {data.map((i) => {
