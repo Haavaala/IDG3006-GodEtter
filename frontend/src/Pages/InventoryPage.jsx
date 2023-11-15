@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import "../App.css";
 import Searchbar from "../components/Searchbar/Searchbar";
 import Stroke from "../components/Stroke/Stroke";
-import Filter from "../components/Filter/Filter";
 import TopMenu from "../components/TopMenu/TopMenu";
 import Inventory from "../components/Inventory/Inventory";
 
 function InventoryPage() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // Inventory data
+  const [categories, setCategories] = useState([]); // Categories
+
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true)
 
@@ -19,18 +20,40 @@ function InventoryPage() {
     retrieveData();
   }, []);
 
-  const retrieveData = () => {
-    // Set device id
-    const deviceId = 1001;
+  const retrieveData = async () => {
+    try{
 
-    // Axios POST req til /get_device_inventory.php med deviceId i data
-    instance
-      .post("/get_device_inventory.php", { device_id: deviceId })
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(false)
-      });
+      // Set device id
+      const deviceId = 1001;
+      
+      // Axios POST req til /get_device_inventory.php med deviceId i data
+      // Hent kjøleskapet
+    await instance
+    .post("/get_device_inventory.php", { device_id: deviceId })
+    .then((res) => {
+      setData(res.data.data);
+    });
+    
+    // Hent alle kategorier
+    await instance
+    .post("/get_categories.php", { device_id: deviceId })
+    .then((res) => {
+      setCategories(res.data.data);
+    });
+  } catch (error) {
+    console.error("Error fetching data",)
+  }
+    
+
   };
+
+  useEffect(() => {
+    if (data && categories){
+      setLoading(false)
+    }
+
+  },[data,categories])
+
   if (!data) return null;
 
   if(loading){
@@ -44,25 +67,8 @@ function InventoryPage() {
       <Stroke />
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
-      <Filter />
-      {/* {searchedData.map((item, index) => (
-        <Inventory key={index} title={item.name} />
-      ))} */}
-      <Inventory/>
+      <Inventory data={data} categories={categories}/>
 
-      {/* <section className="inventory">
-        {data.map((i) => {
-          return (
-            <div>
-              <h3>{i.name != "" ? i.name : "Unknown"}</h3>
-              <p>Brand: {i.brand != "" ? i.brand : "Unknown"}</p>
-              <p>Amount: {i.quantity}</p>
-              <p>Added: {i.date}</p>
-              <p>Barcode: {i.barcode}</p>
-            </div>
-          );
-        })}
-      </section> */}
     </>
   );
 }

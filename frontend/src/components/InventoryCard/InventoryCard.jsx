@@ -9,7 +9,8 @@ export default function InventoryCard({
   volume,
   title,
   num,
-  icon,
+  iconSmall,
+  iconBig,
   dateBestBefore,
   dateScanned,
   brand,
@@ -49,15 +50,20 @@ export default function InventoryCard({
   const formatDate = (date) => {
     date.split(" ")[0];
     const dateObject = new Date(date);
+    
+    const dateScannedSplit = dateScanned.split(" ")[0];
+    const dateScannedObject = new Date(dateScannedSplit);
 
     let day = "";
     let month = "";
     let year = "";
 
     if (isNaN(dateObject)) {
-      day = "23";
-      month = "11";
-      year = "23";
+      const twoWeeksLater = new Date(dateScannedObject.getTime() + 14 * 24 * 60 * 60 * 1000);
+
+      day = twoWeeksLater.getDate().toString().padStart(2, '0');
+      month = (twoWeeksLater.getMonth() + 1).toString().padStart(2, '0'); 
+      year = twoWeeksLater.getFullYear();
     } else {
       day = dateObject.getDate().toString().padStart(2, "0");
       month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
@@ -65,17 +71,6 @@ export default function InventoryCard({
     }
 
     const formattedDate = `${day}.${month}.${year}`;
-    return formattedDate;
-  };
-
-  const getTodaysDate = () => {
-    const today = new Date();
-
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, "0");
-    const day = today.getDate().toString().padStart(2, "0");
-
-    const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
   };
 
@@ -94,12 +89,40 @@ export default function InventoryCard({
     }
   };
 
+  const checkBestBeforeDate = () => {
+    const dateBestBeforeSplit = dateBestBefore.split(" ")[0];
+    const dateBestBeforeObject = new Date(dateBestBeforeSplit);
+
+    const dateScannedSplit = dateScanned.split(" ")[0];
+    const dateScannedObject = new Date(dateScannedSplit);
+
+    if (isNaN(dateBestBeforeObject)) {
+      const twoWeeksLater = new Date(dateScannedObject.getTime() + 14 * 24 * 60 * 60 * 1000);
+
+      const today = new Date();
+      return today <= twoWeeksLater ? "green" : "red";
+    } else {
+      // Compare with today's date
+      const today = new Date();
+      if (today > dateBestBeforeObject) {
+        // Best before date has passed, set icon color to red
+        return "#BD6F4E";
+      } else {
+        // Best before date is still valid, set icon color to green
+        return "#59704B";
+      }
+    }
+  };
+
+  const IconColor = checkBestBeforeDate();
+
+
   return (
     <>
       <div className="inventoryCard__container">
         {setNewSticker()}
         <div className="inventoryCard__firstPartContainer">
-          <div className="inventoryCard__icon">{icon ? icon : ""}</div>
+          <div className="inventoryCard__icon">{iconSmall ? iconSmall : ""}</div>
           <div className="inventoryCard__titleBox">
             <p>{title ? title : "Udefinert vare"}</p>
             <div className="inventoryCard__numberBox smallp">
@@ -124,7 +147,7 @@ export default function InventoryCard({
                     fill-rule="evenodd"
                     clip-rule="evenodd"
                     d="M8.50008 1.94824C6.76236 1.94824 5.09581 2.63855 3.86706 3.8673C2.6383 5.09606 1.948 6.76261 1.948 8.50033C1.948 10.238 2.6383 11.9046 3.86706 13.1333C5.09581 14.3621 6.76236 15.0524 8.50008 15.0524C10.2378 15.0524 11.9044 14.3621 13.1331 13.1333C14.3619 11.9046 15.0522 10.238 15.0522 8.50033C15.0522 6.76261 14.3619 5.09606 13.1331 3.8673C11.9044 2.63855 10.2378 1.94824 8.50008 1.94824ZM0.885498 8.50033C0.885498 4.29495 4.29471 0.885742 8.50008 0.885742C12.7055 0.885742 16.1147 4.29495 16.1147 8.50033C16.1147 12.7057 12.7055 16.1149 8.50008 16.1149C4.29471 16.1149 0.885498 12.7057 0.885498 8.50033ZM8.50008 5.13574C8.64098 5.13574 8.7761 5.19171 8.87573 5.29134C8.97536 5.39097 9.03133 5.5261 9.03133 5.66699V8.28074L10.6463 9.89574C10.6985 9.94438 10.7404 10.003 10.7694 10.0682C10.7985 10.1334 10.8141 10.2037 10.8153 10.275C10.8166 10.3464 10.8035 10.4172 10.7768 10.4834C10.75 10.5495 10.7103 10.6096 10.6598 10.6601C10.6094 10.7105 10.5493 10.7503 10.4831 10.777C10.417 10.8037 10.3461 10.8168 10.2748 10.8156C10.2035 10.8143 10.1331 10.7987 10.068 10.7697C10.0028 10.7406 9.94413 10.6988 9.8955 10.6466L8.12467 8.87574C8.02501 8.77621 7.96896 8.64117 7.96883 8.50033V5.66699C7.96883 5.5261 8.0248 5.39097 8.12443 5.29134C8.22406 5.19171 8.35919 5.13574 8.50008 5.13574Z"
-                    fill="#BD6F4E"
+                    fill={IconColor}
                   />
                 </g>
                 <defs>
@@ -196,7 +219,7 @@ export default function InventoryCard({
 
       <dialog ref={dialogRef} className="inventoryDialog">
         <div className="inventoryDialog__firstPartContainer">
-          <div className="inventoryCard__icon">{icon}</div>
+          <div className="inventoryCard__icon inventoryDialog__icon">{iconBig}</div>
           <div className="inventoryDialog__titleBox">
             <p>{title ? title : "Udefinert vare"}</p>
             <button onClick={closeDialog}>
@@ -242,7 +265,7 @@ export default function InventoryCard({
                     fill-rule="evenodd"
                     clip-rule="evenodd"
                     d="M8.50008 1.94824C6.76236 1.94824 5.09581 2.63855 3.86706 3.8673C2.6383 5.09606 1.948 6.76261 1.948 8.50033C1.948 10.238 2.6383 11.9046 3.86706 13.1333C5.09581 14.3621 6.76236 15.0524 8.50008 15.0524C10.2378 15.0524 11.9044 14.3621 13.1331 13.1333C14.3619 11.9046 15.0522 10.238 15.0522 8.50033C15.0522 6.76261 14.3619 5.09606 13.1331 3.8673C11.9044 2.63855 10.2378 1.94824 8.50008 1.94824ZM0.885498 8.50033C0.885498 4.29495 4.29471 0.885742 8.50008 0.885742C12.7055 0.885742 16.1147 4.29495 16.1147 8.50033C16.1147 12.7057 12.7055 16.1149 8.50008 16.1149C4.29471 16.1149 0.885498 12.7057 0.885498 8.50033ZM8.50008 5.13574C8.64098 5.13574 8.7761 5.19171 8.87573 5.29134C8.97536 5.39097 9.03133 5.5261 9.03133 5.66699V8.28074L10.6463 9.89574C10.6985 9.94438 10.7404 10.003 10.7694 10.0682C10.7985 10.1334 10.8141 10.2037 10.8153 10.275C10.8166 10.3464 10.8035 10.4172 10.7768 10.4834C10.75 10.5495 10.7103 10.6096 10.6598 10.6601C10.6094 10.7105 10.5493 10.7503 10.4831 10.777C10.417 10.8037 10.3461 10.8168 10.2748 10.8156C10.2035 10.8143 10.1331 10.7987 10.068 10.7697C10.0028 10.7406 9.94413 10.6988 9.8955 10.6466L8.12467 8.87574C8.02501 8.77621 7.96896 8.64117 7.96883 8.50033V5.66699C7.96883 5.5261 8.0248 5.39097 8.12443 5.29134C8.22406 5.19171 8.35919 5.13574 8.50008 5.13574Z"
-                    fill="#BD6F4E"
+                    fill={IconColor}
                   />
                 </g>
                 <defs>

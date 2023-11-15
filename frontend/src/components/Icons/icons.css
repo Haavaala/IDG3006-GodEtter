@@ -1,0 +1,14 @@
+/* 44x64
+62x90
+viewBox="0 0 44 64" */
+
+
+.svg-big {
+    width: 62px;
+    height: 90px;
+}
+
+.svg-small {
+    width: 44px;
+    height: 64px;
+}
