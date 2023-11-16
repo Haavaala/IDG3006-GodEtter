@@ -33,6 +33,7 @@
 
 body {
   color: var(--black);
+  background-color: var(--white);
 }
 
 h1, h2, h3 {
