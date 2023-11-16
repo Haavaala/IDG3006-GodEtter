@@ -83,6 +83,11 @@ class Database
                 $query = "INSERT INTO `items`(`device_id`, `barcode`, `name`, `brand`,`weight`, `weight_unit`,`allergens`,`quantity`,`category_id`) VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)";
                 $param = "isssissi";
                 break;
+                // Query for editing an item manually
+            case "edit":
+                $query = "UPDATE items SET name = ?, brand = ?, weight = ?, weight_unit = ?, allergens = ?, category_id = ? WHERE device_id = ? AND barcode = ?";
+                $param = "ssissiis";
+                break;
                 // Query for creating item with barcode only
             case "create_unknown":
                 $query = "INSERT INTO `items`(`device_id`, `barcode`, `quantity`) VALUES (?, ?, 1)";
