@@ -8,17 +8,37 @@ import Inventory from "../components/Inventory/Inventory";
 
 function InventoryPage() {
   const [data, setData] = useState([]); // Inventory data
+  const [allData, setAllData] = useState([]);
   const [categories, setCategories] = useState([]); // Categories
 
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true)
 
-  const searchedData = data.filter((item) =>
-    item.name.toLowerCase().includes(searchInput.toLowerCase())
-  );
+  // const [searchedData, setSearchedData] = useState([]);
+
+  // const handleSearchChange = (event) => {
+  //   setSearchInput(event.target.value);
+  // };
+
   useEffect(() => {
     retrieveData();
   }, []);
+
+
+  useEffect(() => {
+    if (searchInput != ""){
+      setData(allData.filter((item) =>
+        item.name.toLowerCase().includes(searchInput.toLowerCase())
+      ));
+    } else {
+      setData(allData);
+    }
+    console.log(data);
+    console.log(searchInput);
+  }, [searchInput])
+  
+
+
 
   const retrieveData = async () => {
     try{
@@ -32,6 +52,7 @@ function InventoryPage() {
     .post("/get_device_inventory.php", { device_id: deviceId })
     .then((res) => {
       setData(res.data.data);
+      setAllData(res.data.data);
     });
     
     // Hent alle kategorier
@@ -67,7 +88,7 @@ function InventoryPage() {
       <Stroke />
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
-      <Inventory data={data} categories={categories}/>
+      <Inventory data={data} categories={categories} search={searchInput}/>
 
     </>
   );

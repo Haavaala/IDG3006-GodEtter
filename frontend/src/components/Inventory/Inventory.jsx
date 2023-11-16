@@ -4,19 +4,16 @@ import InventoryCategory from '../InventoryCategory/InventoryCategory';
 import '../Filter/filter.css'
 import FilterButton from '../Filter/FilterButton'
 
-export default function Inventory({data, categories}) {
+export default function Inventory({data, categories, search}) {
 
     if (!categories && !data) return null; // Sjekker om category og data ikke eksisterer, hvis saa - ikkje gjoer naake.
 
-    // const [toggledCategories, setToggledCategories] = useState(
-    //   categories?.map(category => ({
-    //     category_id: category.category_id,
-    //     active: false,
-    //     name: category.name
-    //   })) || []
-    // );
-
     const [toggledCategories, setToggledCategories] = useState([]);
+  //   const [searchInput, setSearchInput] = useState("");
+
+  //   const searchedData = data.filter((item) =>
+  //   item.name.toLowerCase().includes(searchInput.toLowerCase())
+  // );
 
     useEffect(() => {
 
@@ -43,10 +40,7 @@ export default function Inventory({data, categories}) {
   
 
       const filterData = (category) => {
-        console.log("Filtering data for category: ", category);
         const filteredArray = data.filter((item) => item.category_id === category.category_id);
-        console.log("Filtered data: ", filteredArray);
-        console.log("I am category " + category.category_id + " and if I am active: " + category.active + " and my name is " + category.name);
         if (category.active) {
           return <InventoryCategory key={category.category_id} category={category.name} data={filteredArray} />;
         }
@@ -74,7 +68,6 @@ export default function Inventory({data, categories}) {
         </div>
                 
         {toggledCategories.map((category) => {
-        console.log("HEI I", category);
         if (category.active) {
             return filterData(category);
         }

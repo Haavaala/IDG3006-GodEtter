@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './filter.css';
 
 function FilterButton({filterText, key, toggleFilterFunc, id, activeStatus}) {
   const [active, setActive] = useState(activeStatus || false);
-  console.log('Aktiv status: ', activeStatus, 'id: ', id)
+
+  useEffect(() => {
+    setActive(activeStatus);
+  }, [activeStatus]);
 
   const toggleFilter = (id) => {
     toggleFilterFunc(id);
