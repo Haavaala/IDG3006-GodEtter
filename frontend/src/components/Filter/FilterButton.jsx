@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './filter.css';
 
-function FilterButton({filterText, key}) {
-  const [active, setActive] = useState(false);
+function FilterButton({filterText, key, toggleFilterFunc, id, activeStatus}) {
+  const [active, setActive] = useState(activeStatus || false);
 
-  const toggleFilter = () => {
-    setActive(!active);
+  useEffect(() => {
+    setActive(activeStatus);
+  }, [activeStatus]);
+
+  const toggleFilter = (id) => {
+    toggleFilterFunc(id);
+    setActive((prevActive) => !prevActive);
   }
 
   return (
-    <button className={`filterButton ${active ? 'active' : ''}`} onClick={toggleFilter} key={key}>
+    <button className={`filterButton ${active ? 'active' : ''}`} onClick={() => toggleFilter(id)} key={key}>
       <i className="filterIcon">{active ? '-' : '+'}</i> <p className='filterText smallp'>{filterText}</p>
     </button>
   );
 }
+
 
 export default FilterButton;
