@@ -11,11 +11,11 @@ $barcode = clean_string($_GET['barcode']);
 $device_id = clean_string($_POST['device_id']);
 $datestamp = clean_string($_POST['datestamp']);
 
-// Run the delete request
-delete_item($barcode, $device_id, $datestamp);
+// Run the get request
+get_item($barcode, $device_id, $datestamp);
 
-// Function to delete an item from the database
-function delete_item($barcode, $device_id, $datestamp)
+// Function to get an item from the database
+function get_item($barcode, $device_id, $datestamp)
 {
 
     // Initialize the database connection
@@ -28,14 +28,18 @@ function delete_item($barcode, $device_id, $datestamp)
         $datestamp
     ];
 
-    $res = $db->run_item_query("delete", $item);
+    $res = $db->run_item_query("select_one", $item);
 
-    if ($res) {
-        response(200, "Deleted item from inventory!");
+    while ($row = mysqli_fetch_assoc($res)) {
+        $data[] = $row;
+    };
+
+    if ($data) {
+        response(200, $data);
         exit;
     } else {
-        log_error("User DeviceID:" . $device_id . " tried to delete item from database: " . $barcode . ", ". $datestamp .", but failed!", false);
-        response(400, "Error when trying to delete item.");
+        log_error("User DeviceID:" . $device_id . " tried to get item from database: " . $barcode . ", ". $datestamp .", but failed!", false);
+        response(400, "Error when trying to get item.");
         exit;
     }
 }

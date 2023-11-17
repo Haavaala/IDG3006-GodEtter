@@ -29,6 +29,7 @@ export default function InventoryCategory({category, data}) {
           allergens={i.allergens}
           brand={i.brand}
           barcode={i.barcode}
+          datestamp={i.date_added}
           />
         );
         }) : <p> Du har ingen varer i denne kategorien i ditt kjøleskap. </p>}

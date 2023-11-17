@@ -85,8 +85,8 @@ class Database
                 break;
                 // Query for editing an item manually
             case "edit":
-                $query = "UPDATE items SET name = ?, brand = ?, weight = ?, weight_unit = ?, allergens = ?, category_id = ? WHERE device_id = ? AND barcode = ?";
-                $param = "ssissiis";
+                $query = "UPDATE items SET name = ?, brand = ?, weight = ?, weight_unit = ?, allergens = ?, category_id = ?, date_bestbefore = ? WHERE device_id = ? AND barcode = ? AND date_added = ?";
+                $param = "ssissisiss";
                 break;
                 // Query for creating item with barcode only
             case "create_unknown":
@@ -95,18 +95,12 @@ class Database
                 break;
                 // Query for deleting items
             case "delete":
-                $query = "DELETE FROM items WHERE device_id = ? AND barcode = ?";
-                $param = "is";
+                $query = "DELETE FROM items WHERE device_id = ? AND barcode = ? AND date_added = ?";
+                $param = "iss";
                 break;
-                // Query for updating an item by increasing the quantity
-            case "update_inc":
-                $query = "UPDATE items SET quantity = quantity + 1 WHERE device_id = ? AND barcode = ?";
-                $param = "is";
-                break;
-                // Query for updating an item by decreasing the quantity
-            case "update_dec":
-                $query = "UPDATE items SET quantity = quantity - 1 WHERE device_id = ? AND barcode = ?";
-                $param = "is";
+            case "select_one":
+                $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, quantity, date_added, date_bestbefore, date_bestby, category_id FROM items WHERE device_id = ? AND barcode = ? AND date_added = ?";
+                $param = "iss";
                 break;
         }
 
@@ -130,7 +124,7 @@ class Database
         }
 
         // Based on what type was originally selected, either select the result or the affected rows to return later.
-        if ($type == "select") {
+        if ($type == "select" or $type == "select_one") {
             $result = $statement->get_result();
         } else {
             $result = $statement->affected_rows;

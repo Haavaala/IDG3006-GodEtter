@@ -4,11 +4,12 @@
 require_once './common.php';
 
 // Check for barcode & device_id in the request
-CheckSetValues(true, true);
+CheckSetValues(true, true, true);
 
 // Retrieve and sanitize strings
 $barcode = clean_string($_GET['barcode']);
 $device_id = clean_string($_POST['device_id']);
+$datestamp = clean_string($_POST['datestamp']);
 
 $name = clean_string($_POST['name']);
 $brand = clean_string($_POST['brand']);
@@ -16,6 +17,7 @@ $weight = clean_string($_POST['weight']);
 $weight_unit = clean_string($_POST['weight_unit']);
 $allergens = clean_string($_POST['allergens']);
 $category = clean_string($_POST['category_id']);
+$bestbefore = clean_string($_POST['bestbefore']);
 
 // Initialize the database connection
 $db = new Database();
@@ -29,7 +31,9 @@ $item = [
     $allergens,
     $category,
     $device_id,
-    $barcode
+    $barcode,
+    $bestbefore,
+    $datestamp
 ];
 
 // Check if the barcode is in the inventory
