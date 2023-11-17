@@ -21,7 +21,7 @@
 }
 
 .inventoryCard__icon {
-    width: 65px;
+    min-width: 56px;
     /* padding: 3px 5px; */
     display: flex;
     justify-content: center;
@@ -104,7 +104,12 @@
 }
 
 .inventoryDialog__icon {
-    min-width: 100px;
+    min-width: 129px;
+    min-height: 131px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--baby_waluigi);
 }
 
 .inventoryDialog__titleBox {

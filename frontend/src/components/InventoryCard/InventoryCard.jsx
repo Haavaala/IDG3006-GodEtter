@@ -218,8 +218,9 @@ export default function InventoryCard({
       </div>
 
       <dialog ref={dialogRef} className="inventoryDialog">
+        {setNewSticker()}
         <div className="inventoryDialog__firstPartContainer">
-          <div className="inventoryCard__icon inventoryDialog__icon">{iconBig}</div>
+          <div className="inventoryDialog__icon">{iconBig}</div>
           <div className="inventoryDialog__titleBox">
             <p>{title ? title : "Udefinert vare"}</p>
             <button onClick={closeDialog}>
