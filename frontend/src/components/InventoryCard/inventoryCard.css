@@ -183,3 +183,9 @@ dialog {
 .newSticker {
     position: absolute;
 }
+
+.matvett-link {
+    display: flex;
+    gap: 8px;
+    color: var(--black);
+}

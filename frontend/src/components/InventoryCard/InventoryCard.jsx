@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./inventoryCard.css";
 import Dessert from "../Icons/Dessert";
 import NewSticker from "./NewSticker";
@@ -17,13 +17,40 @@ export default function InventoryCard({
   allergens,
   barcode
 }) {
-  const dialogRef = useRef(null);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const dialogRef = useRef();
+
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDialogOpen && dialogRef.current && !dialogRef.current.contains(event.target)) {
+        closeDialog();
+      }
+    };
+
+    if (isDialogOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDialogOpen]);
+  // const dialogRef = useRef(null);
 
   const device_id = 1001;
 
-  const openDialog = () => {
-    dialogRef.current.showModal();
-  };
+  // const openDialog = () => {
+  //   dialogRef.current.showModal();
+  // };
 
   //legger bare til slettefunksjonalitet her
   const handleDeleteItem = () => {
@@ -43,9 +70,9 @@ export default function InventoryCard({
       });
   };
 
-  const closeDialog = () => {
-    dialogRef.current.close();
-  };
+  // const closeDialog = () => {
+  //   dialogRef.current.close();
+  // };
 
   const formatDate = (date) => {
     date.split(" ")[0];
@@ -100,7 +127,7 @@ export default function InventoryCard({
       const twoWeeksLater = new Date(dateScannedObject.getTime() + 14 * 24 * 60 * 60 * 1000);
 
       const today = new Date();
-      return today <= twoWeeksLater ? "green" : "red";
+      return today <= twoWeeksLater ? "#59704B" : "#BD6F4E";
     } else {
       // Compare with today's date
       const today = new Date();
@@ -114,12 +141,18 @@ export default function InventoryCard({
     }
   };
 
+  const setColor = () => {
+    if (checkBestBeforeDate) {
+      return "#BD6F4E";
+    }
+  }
+
   const IconColor = checkBestBeforeDate();
 
 
   return (
     <>
-      <div className="inventoryCard__container">
+      <div className="inventoryCard__container" onClick={openDialog}>
         {setNewSticker()}
         <div className="inventoryCard__firstPartContainer">
           <div className="inventoryCard__icon">{iconSmall ? iconSmall : ""}</div>
@@ -217,7 +250,8 @@ export default function InventoryCard({
         </div>
       </div>
 
-      <dialog ref={dialogRef} className="inventoryDialog">
+      {isDialogOpen && (
+      <dialog ref={dialogRef} className="inventoryDialog" open>
         {setNewSticker()}
         <div className="inventoryDialog__firstPartContainer">
           <div className="inventoryDialog__icon">{iconBig}</div>
@@ -300,33 +334,35 @@ export default function InventoryCard({
                   stroke="#1A1A1A"
                 />
               </svg>
-              <p className="smallp underline">God etter</p>
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clip-path="url(#clip0_257_2111)">
-                  <path
-                    d="M11 6.99896C10.9855 8.70596 10.8908 9.647 10.2702 10.2676C9.53776 11 8.35894 11 6.0013 11C3.64367 11 2.46485 11 1.73242 10.2676C1 9.53515 1 8.35633 1 5.9987C1 3.64106 1 2.46224 1.73242 1.72982C2.353 1.10924 3.29403 1.01447 5.00104 1"
-                    stroke="#1A1A1A"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M11 3.5H7C6.21143 3.5 5.69464 3.8358 5.43898 4.05801C5.32073 4.16079 5.26161 4.21218 5.2369 4.2369C5.21218 4.26161 5.16079 4.32073 5.05801 4.43898C4.8358 4.69464 4.5 5.21143 4.5 6V7.5M11 3.5L8.5 1M11 3.5L8.5 6"
-                    stroke="#1A1A1A"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_257_2111">
-                    <rect width="12" height="12" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
+              <a className="matvett-link" href="https://www.matvett.no/brukopp-leksikon" target='_blank'>
+                <p className="smallp underline">God etter</p>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_257_2111)">
+                    <path
+                      d="M11 6.99896C10.9855 8.70596 10.8908 9.647 10.2702 10.2676C9.53776 11 8.35894 11 6.0013 11C3.64367 11 2.46485 11 1.73242 10.2676C1 9.53515 1 8.35633 1 5.9987C1 3.64106 1 2.46224 1.73242 1.72982C2.353 1.10924 3.29403 1.01447 5.00104 1"
+                      stroke="#1A1A1A"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M11 3.5H7C6.21143 3.5 5.69464 3.8358 5.43898 4.05801C5.32073 4.16079 5.26161 4.21218 5.2369 4.2369C5.21218 4.26161 5.16079 4.32073 5.05801 4.43898C4.8358 4.69464 4.5 5.21143 4.5 6V7.5M11 3.5L8.5 1M11 3.5L8.5 6"
+                      stroke="#1A1A1A"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_257_2111">
+                      <rect width="12" height="12" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
             </div>
           </div>
           <div>
@@ -342,6 +378,7 @@ export default function InventoryCard({
           <button onClick={handleDeleteItem}>Slett varene</button>
         </div>
       </dialog>
+      )}
     </>
   );
 }
