@@ -51,6 +51,8 @@ export default function Inventory({data, categories, search}) {
     useEffect(() => {
     }, [toggledCategories]);
 
+    const sortedCategories = [...toggledCategories].sort((a, b) => (b.active ? 1 : -1));
+
   
     return (
         <>
@@ -61,13 +63,13 @@ export default function Inventory({data, categories, search}) {
           ))}
         </div> */}
         <div className='filter-container'>
-          {toggledCategories.map((category, index) => (
+          {sortedCategories.map((category, index) => (
             <FilterButton key={index} filterText={category.name} id={category.category_id} activeStatus={category.active} toggleFilterFunc={toggleFilter}
             />
           ))}
         </div>
                 
-        {toggledCategories.map((category) => {
+        {sortedCategories.map((category) => {
         if (category.active) {
             return filterData(category);
         }
