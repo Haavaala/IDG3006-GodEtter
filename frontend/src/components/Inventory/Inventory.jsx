@@ -4,16 +4,12 @@ import InventoryCategory from '../InventoryCategory/InventoryCategory';
 import '../Filter/filter.css'
 import FilterButton from '../Filter/FilterButton'
 
-export default function Inventory({data, categories, search}) {
+export default function Inventory({data, categories}) {
 
     if (!categories && !data) return null; // Sjekker om category og data ikke eksisterer, hvis saa - ikkje gjoer naake.
 
     const [toggledCategories, setToggledCategories] = useState([]);
-  //   const [searchInput, setSearchInput] = useState("");
 
-  //   const searchedData = data.filter((item) =>
-  //   item.name.toLowerCase().includes(searchInput.toLowerCase())
-  // );
 
     useEffect(() => {
 
