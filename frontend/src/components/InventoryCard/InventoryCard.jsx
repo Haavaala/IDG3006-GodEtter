@@ -15,7 +15,8 @@ export default function InventoryCard({
   dateScanned,
   brand,
   allergens,
-  barcode
+  barcode,
+  datestamp
 }) {
   const dialogRef = useRef(null);
 
@@ -30,6 +31,7 @@ export default function InventoryCard({
     const data = {
       barcode,
       device_id,
+      datestamp
     };
     instance
       .post(`/delete_item.php?barcode=${barcode}`, data)
