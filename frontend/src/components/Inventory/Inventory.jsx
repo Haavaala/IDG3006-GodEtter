@@ -29,6 +29,16 @@ export default function Inventory({data, categories, search}) {
       }
     }, [categories]);
 
+      // Define a custom sorting function
+    const sortUncategorizedLast = (a, b) => {
+      if (a.category_id === 1) return 1; // "uncategorized" category goes last
+      if (b.category_id === 1) return -1;
+      return a.active && !b.active ? -1 : b.active && !a.active ? 1 : 0;
+    };
+
+    // Sort categories using the custom sort function
+    const sortedUncategorizedLast = toggledCategories.sort(sortUncategorizedLast);
+
 
       const toggleFilter = (category_id) => {
         setToggledCategories((prevCategories) =>
@@ -51,7 +61,7 @@ export default function Inventory({data, categories, search}) {
     useEffect(() => {
     }, [toggledCategories]);
 
-    const sortedCategories = [...toggledCategories].sort((a, b) => (b.active ? 1 : -1));
+    const sortedCategories = [...sortedUncategorizedLast].sort((a, b) => (b.active ? 1 : -1));
 
   
     return (
