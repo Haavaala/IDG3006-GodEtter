@@ -17,7 +17,7 @@ $weight = clean_string($_POST['weight']);
 $weight_unit = clean_string($_POST['weight_unit']);
 $allergens = clean_string($_POST['allergens']);
 $category = clean_string($_POST['category_id']);
-$bestbefore = clean_string($_POST['bestbefore']);
+$date_bestbefore = clean_string($_POST['date_bestbefore']);
 
 // Initialize the database connection
 $db = new Database();
@@ -30,9 +30,9 @@ $item = [
     $weight_unit,
     $allergens,
     $category,
+    $date_bestbefore,
     $device_id,
     $barcode,
-    $bestbefore,
     $datestamp
 ];
 
