@@ -180,12 +180,20 @@ dialog {
     transform: translate(-50%, -50%);
 }
 
-.newSticker {
-    position: absolute;
-}
-
 .matvett-link {
     display: flex;
     gap: 8px;
     color: var(--black);
 }
+
+/* Sticker */
+.newSticker {
+    position: absolute;
+}
+
+.newSticker__big {
+    transform: scale(1.4063);
+    transform-origin: top left;
+}
+
+

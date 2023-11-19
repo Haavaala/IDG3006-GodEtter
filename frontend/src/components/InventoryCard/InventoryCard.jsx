@@ -101,7 +101,7 @@ export default function InventoryCard({
     return formattedDate;
   };
 
-  const setNewSticker = () => {
+  const setNewSticker = (size) => {
     const scanningDateString = dateScanned.split(" ")[0];
 
     const today = new Date();
@@ -112,7 +112,7 @@ export default function InventoryCard({
     const oneDayInMilliseconds = 1 * 24 * 60 * 60 * 1000;
 
     if (timeDifference <= oneDayInMilliseconds) {
-      return <NewSticker />;
+      return <NewSticker size={size} />;
     }
   };
 
@@ -153,7 +153,7 @@ export default function InventoryCard({
   return (
     <>
       <div className="inventoryCard__container" onClick={openDialog}>
-        {setNewSticker()}
+        {setNewSticker('small')}
         <div className="inventoryCard__firstPartContainer">
           <div className="inventoryCard__icon">{iconSmall ? iconSmall : ""}</div>
           <div className="inventoryCard__titleBox">
@@ -252,7 +252,7 @@ export default function InventoryCard({
 
       {isDialogOpen && (
       <dialog ref={dialogRef} className="inventoryDialog" open>
-        {setNewSticker()}
+        {setNewSticker('big')}
         <div className="inventoryDialog__firstPartContainer">
           <div className="inventoryDialog__icon">{iconBig}</div>
           <div className="inventoryDialog__titleBox">
