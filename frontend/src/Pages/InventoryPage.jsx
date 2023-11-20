@@ -22,6 +22,15 @@ function InventoryPage() {
 
   useEffect(() => {
     retrieveData();
+
+      // Hente data hvert 10 sekund
+      const dataInterval = setInterval(() => {
+        console.log("Refresh done");
+        retrieveData();
+      }, 10000);
+  
+      // Clean up intervalet når componentet unmountes
+      return () => clearInterval(dataInterval);
   }, []);
 
 
@@ -88,7 +97,7 @@ function InventoryPage() {
       <Stroke />
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
-      <Inventory data={data} categories={categories} search={searchInput}/>
+      <Inventory data={data} categories={categories} search={searchInput} retrieveData={retrieveData}/>
 
     </>
   );

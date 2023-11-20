@@ -16,7 +16,8 @@ export default function InventoryCard({
   brand,
   allergens,
   barcode,
-  datestamp
+  datestamp,
+  retrieveData
 }) {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -64,7 +65,9 @@ export default function InventoryCard({
       .post(`/delete_item.php?barcode=${barcode}`, data)
       .then((response) => {
         console.log(`Du sletta den ${barcode}`, response.data);
-        window.location.reload();
+        retrieveData();
+        closeDialog();
+        
         // setData((prevData) => prevData.filter((item) => item.barcode !== barcode));
       })
       .catch((error) => {
