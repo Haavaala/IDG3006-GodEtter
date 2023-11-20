@@ -4,7 +4,7 @@ import InventoryCategory from '../InventoryCategory/InventoryCategory';
 import '../Filter/filter.css'
 import FilterButton from '../Filter/FilterButton'
 
-export default function Inventory({data, categories, search}) {
+export default function Inventory({data, categories, search, retrieveData}) {
 
     if (!categories && !data) return null; // Sjekker om category og data ikke eksisterer, hvis saa - ikkje gjoer naake.
 
@@ -42,7 +42,7 @@ export default function Inventory({data, categories, search}) {
       const filterData = (category) => {
         const filteredArray = data.filter((item) => item.category_id === category.category_id);
         if (category.active) {
-          return <InventoryCategory key={category.category_id} category={category.name} data={filteredArray} />;
+          return <InventoryCategory key={category.category_id} category={category.name} data={filteredArray} retrieveData={retrieveData}/>;
         }
     
         return null;
