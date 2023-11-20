@@ -101,6 +101,7 @@
     /* flex: 1; */
     flex: 1 1 auto;
     background-color: var(--white);
+    z-index: 2;
 }
 
 .inventoryDialog__icon {
@@ -189,11 +190,13 @@ dialog {
 /* Sticker */
 .newSticker {
     position: absolute;
+    z-index: 1;
 }
 
 .newSticker__big {
     transform: scale(1.4063);
     transform-origin: top left;
+    z-index: 3;
 }
 
 

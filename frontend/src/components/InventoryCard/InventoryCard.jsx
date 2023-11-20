@@ -171,9 +171,6 @@ export default function InventoryCard({
           <div className="inventoryCard__icon">{iconSmall ? iconSmall : ""}</div>
           <div className="inventoryCard__titleBox">
             <p>{title ? title : "Udefinert vare"}</p>
-            <div className="inventoryCard__numberBox smallp">
-              <p>{num}</p>
-            </div>
           </div>
         </div>
         <div className="inventoryCard__stroke--horizontal" />
