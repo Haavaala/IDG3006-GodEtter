@@ -125,43 +125,65 @@ function send_item($req_data, $barcode, $device_id)
         // parse the category
         $category = parse_category($to_parse);
 
+        // Add a default best before date
+
+        // Get the current date and time
+        $currentDateTime = new DateTime();
+
+        if ($category == 9) {
+             // Add 1 week to the current date and time for meat category
+            $currentDateTime->add(new DateInterval('P1W'));
+        } else {
+            // Add 2 week to the current date and time for everything else
+            $currentDateTime->add(new DateInterval('P2W'));
+        }
+
+        // Format the result as a string & store it
+        $bestbefore = $currentDateTime->format('Y-m-d H:i:s');
 
         // * ---- Query
 
+        // ? Removed quantity code as we are not using that system anymore
         // Check if the barcode already is in the database
-        $res = $db->run_item_query("select", $item);
+        // $res = $db->run_item_query("select", $item);
+        // if ($res->num_rows > 0) {
+        //     // Update the quantity
+        //     $result = $db->run_item_query("update_inc", $item);
+        //     $response_text = "update";
+        // } else {
 
-        if ($res->num_rows > 0) {
-            // Update the quantity
-            $result = $db->run_item_query("update_inc", $item);
-            $response_text = "update";
-        } else {
-            // Add item to database
-            // Prepare data array
-            $prepared_data = [
-                $data->name,
-                $data->brand,
-                $data->weight,
-                $data->weight_unit,
-                $allergens,
-                $category
-            ];
-            $result = $db->run_item_query("create_full", $item, $prepared_data);
-            $response_text = "create";
-        }
+
+        // Add item to database
+        // Prepare data array
+        $prepared_data = [
+            $data->name,
+            $data->brand,
+            $data->weight,
+            $data->weight_unit,
+            $allergens,
+            $category,
+            $bestbefore
+        ];
+
+        $result = $db->run_item_query("create_full", $item, $prepared_data);
+        $response_text = "create";
+
+
+        // }
     } else {
         // Check if the barcode already is in the database
         $res = $db->run_item_query("select", $item);
 
-        if ($res->num_rows > 0) {
-            // Update the quantity of the unknown item
-            $result = $db->run_item_query("update_inc", $item);
-            $response_text = "update";
-        } else {
+        // ? Removed quantity code
+        // if ($res->num_rows > 0) {
+        //     // Update the quantity of the unknown item
+        //     $result = $db->run_item_query("update_inc", $item);
+        //     $response_text = "update";
+        // } else {
             // Add barcode to database, unknown item
             $result = $db->run_item_query("create_unknown", $item);
             $response_text = "create";
-        }
+        // }
     }
 
     if (is_null($req_data) && $result) {

@@ -75,13 +75,13 @@ class Database
         switch ($type) {
                 // Query for selecting items
             case "select":
-                $query = "SELECT barcode, quantity FROM items WHERE device_id = ? AND barcode = ?";
+                $query = "SELECT barcode FROM items WHERE device_id = ? AND barcode = ?";
                 $param = "is";
                 break;
                 // Query for creating item with full data
             case "create_full":
-                $query = "INSERT INTO `items`(`device_id`, `barcode`, `name`, `brand`,`weight`, `weight_unit`,`allergens`,`quantity`,`category_id`) VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)";
-                $param = "isssissi";
+                $query = "INSERT INTO `items`(`device_id`, `barcode`, `name`, `brand`,`weight`, `weight_unit`,`allergens`,`category_id`, `date_bestbefore`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $param = "isssissis";
                 break;
                 // Query for editing an item manually
             case "edit":
@@ -90,7 +90,7 @@ class Database
                 break;
                 // Query for creating item with barcode only
             case "create_unknown":
-                $query = "INSERT INTO `items`(`device_id`, `barcode`, `quantity`) VALUES (?, ?, 1)";
+                $query = "INSERT INTO `items`(`device_id`, `barcode`,) VALUES (?, ?)";
                 $param = "is";
                 break;
                 // Query for deleting items
@@ -99,7 +99,7 @@ class Database
                 $param = "iss";
                 break;
             case "select_one":
-                $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, quantity, date_added, date_bestbefore, date_bestby, category_id FROM items WHERE device_id = ? AND barcode = ? AND date_added = ?";
+                $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, category_id FROM items WHERE device_id = ? AND barcode = ? AND date_added = ?";
                 $param = "iss";
                 break;
         }
@@ -142,10 +142,10 @@ class Database
     {
         if (!$category){
             // Query to get all items from one device's inventory
-            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, quantity, date_added, date_bestbefore, date_bestby, category_id from items WHERE device_id = ? ORDER BY date_added DESC";
+            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, category_id from items WHERE device_id = ? ORDER BY date_added DESC";
         } else {
             // Find items by category
-            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, quantity, date_added, date_bestbefore, date_bestby from items WHERE device_id = ? AND category_id = ? ORDER BY date_added DESC";
+            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore from items WHERE device_id = ? AND category_id = ? ORDER BY date_added DESC";
         }
         // Prepare the statement
         $statement = $this::$con->prepare($query);
