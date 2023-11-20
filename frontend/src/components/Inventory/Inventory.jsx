@@ -37,7 +37,9 @@ export default function Inventory({data, categories, search}) {
     };
 
     // Sort categories using the custom sort function
-    const sortedUncategorizedLast = toggledCategories.sort(sortUncategorizedLast);
+    const sortedCategories = toggledCategories.sort(sortUncategorizedLast);
+
+    // const sortedCategories = [...sortedUncategorizedLast].sort((a, b) => (b.active ? 1 : -1));
 
 
       const toggleFilter = (category_id) => {
@@ -61,7 +63,6 @@ export default function Inventory({data, categories, search}) {
     useEffect(() => {
     }, [toggledCategories]);
 
-    const sortedCategories = [...sortedUncategorizedLast].sort((a, b) => (b.active ? 1 : -1));
 
   
     return (
