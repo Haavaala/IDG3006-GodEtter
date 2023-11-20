@@ -83,7 +83,7 @@ function InventoryPage() {
   }
   return (
     <>
-      <TopMenu />
+      {/* <TopMenu /> */}
       <h1 className="text-center">Ditt kjøleskap</h1>
       <Stroke />
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />

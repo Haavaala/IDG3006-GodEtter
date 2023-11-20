@@ -4,6 +4,7 @@ import Dessert from "../Icons/Dessert";
 import NewSticker from "./NewSticker";
 import axios from "axios";
 import instance from "../../instance";
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function InventoryCard({
   volume,
@@ -19,6 +20,8 @@ export default function InventoryCard({
   datestamp
 }) {
   const dialogRef = useRef(null);
+
+  const navigate = useNavigate()
 
   const device_id = 1001;
 
@@ -118,6 +121,10 @@ export default function InventoryCard({
 
   const IconColor = checkBestBeforeDate();
 
+  const handleEditItem = (barcode) => {
+    //redirect to the edit page
+    history.pushState(`/Edititem/${barcode}`)
+  }
 
   return (
     <>
@@ -340,6 +347,11 @@ export default function InventoryCard({
           <p className="inventoryDialog__scannedAndDelete--scanned">
             Scannet <span className="smallp">{formatDate(dateScanned)}</span>
           </p>
+                    {/*kun for testing, fjernes ved merge */}
+                    <button onClick={() =>{
+                      navigate(`/Edititem/${barcode}/${dateScanned}`)
+                    }
+                    }>Rediger vare</button>
           <button onClick={handleDeleteItem}>Slett varene</button>
         </div>
       </dialog>

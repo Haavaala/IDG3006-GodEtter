@@ -1,66 +1,102 @@
-
 .editItem-modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    flex-direction: column;
-    /* transform: translate(-50%, -50%); */
-    min-width: 100%;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Set a fixed width or adjust as needed */
-  }
-  
-  .editItem-modal h1 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .editItem-form {
-    margin-top: 20px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
+  min-width: 100%;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  .seksjon{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .editItem-form label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .editItem-form input,
-  .editItem-form select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .mengde-div {
-    display: flex;
-    flex-direction: row; 
-    align-items: center;
-  }
-  
-  .editItem-form select {
-    font-size: 16px; /* Set the font size for the select element */
-  }
-  
-  .editItem-form input[type="submit"] {
-    background: var(--baby_waluigi);
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .editItem-form input[type="submit"]:hover {
-    background: var(--blue);
-  }
-  
+.editItem-modal h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.editItem-form {
+  margin-top: 20px;
+}
+
+.seksjon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1rem;
+}
+
+.editItem-form label {
+  margin-bottom: 10px; 
+  font-weight: bold;
+  width: 100px;
+}
+
+.editItem-form input,
+.editItem-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 1rem;
+}
+
+.mengde-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1rem;
+}
+
+.mengde-div > label:nth-child(3){
+  margin-right: -3rem;
+  margin-left: 1rem;
+}
+
+.mengde-div > label:nth-child(1){
+  margin-right: -2rem;
+}
+
+.mengde-div > input{
+  width: 2.5rem;
+}
+
+.mengde-div > select{
+  max-width: 4rem;
+}
+
+.editItem-form select {
+  font-size: 16px;
+}
+
+.editItem-form input[type="submit"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  background: var(--baby_waluigi);
+  color: black;
+  cursor: pointer;
+  width: 50%;
+}
+
+.editItem-form input[type="submit"]:hover {
+  background: var(--blue);
+}
+
+.avbryt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-color: var(--baby_waluigi);
+  border: none;
+  border-radius: 5px;
+  width: 4rem;
+  height: 2rem;
+  color: black;
+}
