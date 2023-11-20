@@ -53,7 +53,7 @@ function clean_string($var)
 }
 
 // Function to check if certain values are set
-function CheckSetValues($check_barcode = false, $check_device_id = false, $check_category = false)
+function CheckSetValues($check_barcode = false, $check_device_id = false, $check_dateadded = false, $check_category = false)
 {
     // Check if API KEY is set
     if (!isset($_ENV['API_KEY'])) {
@@ -73,6 +73,7 @@ function CheckSetValues($check_barcode = false, $check_device_id = false, $check
         // Check if barcode is set by GET
         if (!isset($_GET['barcode']) || empty($_GET['barcode'])) {
             response(400, "Barcode not set", NULL);
+            exit;
         }
     }
 
@@ -80,6 +81,15 @@ function CheckSetValues($check_barcode = false, $check_device_id = false, $check
         // Check if device_id is set by POST
         if (!isset($_POST['device_id']) || empty($_POST['device_id'])) {
             response(400, "Device id not set");
+            exit;
+        }
+    }
+
+    if ($check_dateadded) {
+        // Check if category is set by POST
+        if (!isset($_POST['datestamp']) || empty($_POST['datestamp'])) {
+            response(400, "Date added not set");
+            exit;
         }
     }
 
@@ -87,6 +97,7 @@ function CheckSetValues($check_barcode = false, $check_device_id = false, $check
         // Check if category is set by POST
         if (!isset($_GET['category']) || empty($_GET['category'])) {
             response(400, "Category not set");
+            exit;
         }
     }
 }
