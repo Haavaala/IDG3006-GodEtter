@@ -101,6 +101,17 @@ export default function InventoryCard({
     return formattedDate;
   };
 
+  const FormatTime = (date) => {
+    const dateObject = new Date(date);
+
+    const hours = dateObject.getHours();
+    const minutes = dateObject.getMinutes();
+
+    const formattedTime = `${hours}:${minutes}`;
+
+    return formattedTime
+  }
+
   const setNewSticker = (size) => {
     const scanningDateString = dateScanned.split(" ")[0];
 
