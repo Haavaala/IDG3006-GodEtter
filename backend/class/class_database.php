@@ -85,7 +85,7 @@ class Database
                 break;
                 // Query for editing an item manually
             case "edit":
-                $query = "UPDATE items SET name = ?, brand = ?, weight = ?, weight_unit = ?, allergens = ?, category_id = ?, date_bestbefore = ? WHERE device_id = ? AND barcode = ? AND date_added = ?";
+                $query = "UPDATE items SET name = ?, brand = ?, weight = ?, weight_unit = ?, allergens = ?, category_id = ?, date_bestbefore = ?, edited = 1 WHERE device_id = ? AND barcode = ? AND date_added = ?";
                 $param = "ssissisiss";
                 break;
                 // Query for creating item with barcode only
@@ -99,7 +99,7 @@ class Database
                 $param = "iss";
                 break;
             case "select_one":
-                $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, category_id FROM items WHERE device_id = ? AND barcode = ? AND date_added = ?";
+                $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, category_id, edited FROM items WHERE device_id = ? AND barcode = ? AND date_added = ?";
                 $param = "iss";
                 break;
         }
@@ -142,10 +142,10 @@ class Database
     {
         if (!$category){
             // Query to get all items from one device's inventory
-            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, category_id from items WHERE device_id = ? ORDER BY date_added DESC";
+            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, category_id, edited from items WHERE device_id = ? ORDER BY date_added DESC";
         } else {
             // Find items by category
-            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore from items WHERE device_id = ? AND category_id = ? ORDER BY date_added DESC";
+            $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, edited from items WHERE device_id = ? AND category_id = ? ORDER BY date_added DESC";
         }
         // Prepare the statement
         $statement = $this::$con->prepare($query);
