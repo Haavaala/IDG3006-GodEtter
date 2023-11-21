@@ -10,8 +10,8 @@ It is built using:
 To set this project up locally, check the README files in all the individual folders.
 
 ## Authors
-- Martine Fremstad - Designer
-- Ingvild Nystein - Designer
+- Martine Garvik Fremstad - Designer
+- Ingvild Netland Nystein - Designer
 - Ingrid Gladheim - Front-end developer - [ingring](https://github.com/ingring)
 - Håvard Larsen - Hardware & front-end developer - [Haavaala](https://github.com/haavaala)
 - Nicolas Laukemann - Back-end developer - [nicollau](https://github.com/nicollau)
