@@ -110,7 +110,7 @@ function InventoryPage() {
       <Inventory data={data} categories={categories} search={searchInput} retrieveData={retrieveData}/>
 
 
-      <NotificationContent data={data} />
+      {/* <NotificationContent data={data} /> */}
     </>
   );
 }
