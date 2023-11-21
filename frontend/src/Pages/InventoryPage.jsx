@@ -108,9 +108,6 @@ function InventoryPage() {
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
       <Inventory data={data} categories={categories} search={searchInput} retrieveData={retrieveData}/>
-
-
-      <NotificationContent data={data} />
     </>
   );
 }
