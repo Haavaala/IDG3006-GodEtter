@@ -1,12 +1,12 @@
 import React from 'react'
 import EditItem from '../components/EditItem/EditItem'
 
-function RecipePage() {
+function ItemEditPage() {
   return (
-    <>     
-    {/* <EditItem /> */}
+    <>
+    <EditItem></EditItem>
     </>
   )
 }
 
-export default RecipePage
+export default ItemEditPage
