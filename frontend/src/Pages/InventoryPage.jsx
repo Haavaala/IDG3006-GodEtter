@@ -68,7 +68,16 @@ function InventoryPage() {
     await instance
     .post("/get_categories.php", { device_id: deviceId })
     .then((res) => {
-      setCategories(res.data.data);
+      // setCategories(res.data.data);
+
+      const fetchedCategories = res.data.data;
+
+      const updatedCategories = [
+        ...fetchedCategories.slice(1), 
+        fetchedCategories[0] 
+      ];
+    
+      setCategories(updatedCategories);
     });
   } catch (error) {
     console.error("Error fetching data",)

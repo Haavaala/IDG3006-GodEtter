@@ -39,7 +39,6 @@
 
 .inventoryCard__titleBox p {
     margin: 10px;
-    margin-right: 0;
     display: -webkit-box;
     -webkit-line-clamp: 3; 
     line-clamp: 3; 
@@ -181,6 +180,10 @@
 
 .inventoryDialog__modify button.delete {
     background-color: var(--peach);
+}
+
+.inventoryDialog__modify button p {
+    padding: 1px;
 }
 
 .inventoryDialog__scanned {

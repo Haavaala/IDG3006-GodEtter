@@ -8,6 +8,7 @@ export default function Inventory({data, categories, search, retrieveData}) {
 
     if (!categories && !data) return null; // Sjekker om category og data ikke eksisterer, hvis saa - ikkje gjoer naake.
 
+    console.log(categories)
     const [toggledCategories, setToggledCategories] = useState([]);
   //   const [searchInput, setSearchInput] = useState("");
 
@@ -15,10 +16,11 @@ export default function Inventory({data, categories, search, retrieveData}) {
   //   item.name.toLowerCase().includes(searchInput.toLowerCase())
   // );
 
+
     useEffect(() => {
 
 
-      if (categories && categories.length > 0) {
+      if (categories && categories.length > 0 && data && data.length > 0) {
         setToggledCategories(
           categories.map((category) => ({
             category_id: category.category_id,
@@ -27,19 +29,7 @@ export default function Inventory({data, categories, search, retrieveData}) {
           }))
         );
       }
-    }, [categories]);
-
-      // Define a custom sorting function
-    const sortUncategorizedLast = (a, b) => {
-      if (a.category_id === 1) return 1; // "uncategorized" category goes last
-      if (b.category_id === 1) return -1;
-      return a.active && !b.active ? -1 : b.active && !a.active ? 1 : 0;
-    };
-
-    // Sort categories using the custom sort function
-    const sortedCategories = toggledCategories.sort(sortUncategorizedLast);
-
-    // const sortedCategories = [...sortedUncategorizedLast].sort((a, b) => (b.active ? 1 : -1));
+    }, [categories, data]);
 
 
       const toggleFilter = (category_id) => {
@@ -49,7 +39,8 @@ export default function Inventory({data, categories, search, retrieveData}) {
           )
         );
       };
-  
+
+      const sortedCategories = [...toggledCategories].sort((a, b) => (b.active ? 1 : -1));
 
       const filterData = (category) => {
         const filteredArray = data.filter((item) => item.category_id === category.category_id);
