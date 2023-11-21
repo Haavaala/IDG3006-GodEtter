@@ -26,15 +26,16 @@ CREATE TABLE `items` (
   `quantity` int(11) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
   `date_bestbefore` datetime NOT NULL,
-  `category_id` int(11) NOT NULL DEFAULT 1
+  `category_id` int(11) NOT NULL DEFAULT 1,
+  `edited` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`device_id`, `barcode`, `name`, `brand`, `weight`, `weight_unit`, `allergens`, `quantity`, `date_added`, `date_bestbefore`, `category_id`) VALUES
-(1001, '00000', 'Example item', 'Example brand', 100, 'g', 'Example allergens', 1, '2023-01-01 00:00:00', '2024-01-01 00:00:00', 1);
+INSERT INTO `items` (`ìtem_id`,`device_id`, `barcode`, `name`, `brand`, `weight`, `weight_unit`, `allergens`, `quantity`, `date_added`, `date_bestbefore`, `category_id`) VALUES
+(0,1001, '00000', 'Example item', 'Example brand', 100, 'g', 'Example allergens', 1, '2023-01-01 00:00:00', '2024-01-01 00:00:00', 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -56,7 +57,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Constraints for dumped tables
