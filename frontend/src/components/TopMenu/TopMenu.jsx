@@ -4,7 +4,7 @@ import Settings from "../Settings/Settings";
 import "./topMenu.css";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function TopMenu() {
+export default function TopMenu({data}) {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +13,7 @@ export default function TopMenu() {
         <Notification
           onClick={() => {
             console.log("HALLØA");
-            navigate(`/Notifications`);
+            navigate(`/Notifications`, {state: data});
           }}
         />
         <Settings />
