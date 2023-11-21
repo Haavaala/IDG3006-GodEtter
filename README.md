@@ -2,7 +2,7 @@
 GodEtter is a "smart fridge" WoT project made for the IDG3006 course at NTNU Gjøvik. 
 
 It is built using:
-*  **React** (front-end)
+* **React** (front-end)
 * **Python** (hardware / Pi)
 * **PHP + MySQL** (back-end).
 
