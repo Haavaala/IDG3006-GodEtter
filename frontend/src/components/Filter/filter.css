@@ -4,7 +4,26 @@
     gap: 10px;
     overflow-x: auto;
     margin: 0 10px;
+    padding-bottom: 5px;
 }
+
+.filter-container::-webkit-scrollbar{
+    width: 2.5px; /* Set the width of the scrollbar */
+    position: absolute;
+    right: 0; /* Position the scrollbar on the right of the element*/
+    height: 5px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.filter-container::-webkit-scrollbar-thumb {
+    /* background-color: #59704B; */
+    background-color: #4A5085;
+ }
+ ::-webkit-scrollbar-track {
+    background: var(--light_grey);
+    border-radius: 5px;
+ }
 
 .filterButton{
     background-color: var(--baby_waluigi);
