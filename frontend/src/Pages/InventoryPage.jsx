@@ -5,7 +5,6 @@ import Searchbar from "../components/Searchbar/Searchbar";
 import Stroke from "../components/Stroke/Stroke";
 import TopMenu from "../components/TopMenu/TopMenu";
 import Inventory from "../components/Inventory/Inventory";
-import NotificationContent from "../components/Notification/NotificationContent";
 
 function InventoryPage() {
   const [data, setData] = useState([]); // Inventory data
