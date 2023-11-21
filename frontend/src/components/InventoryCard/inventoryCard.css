@@ -21,7 +21,7 @@
 }
 
 .inventoryCard__icon {
-    width: 65px;
+    min-width: 56px;
     /* padding: 3px 5px; */
     display: flex;
     justify-content: center;
@@ -39,7 +39,6 @@
 
 .inventoryCard__titleBox p {
     margin: 10px;
-    margin-right: 0;
     display: -webkit-box;
     -webkit-line-clamp: 3; 
     line-clamp: 3; 
@@ -94,17 +93,22 @@
 
 /* Inventory dialog */
 .inventoryDialog {
-    margin: 20px;
     border: 2px solid var(--black);
     border-radius: 6px;
-    width: 70vw;
+    width: 289px;
     /* flex: 1; */
     flex: 1 1 auto;
     background-color: var(--white);
+    z-index: 4;
 }
 
 .inventoryDialog__icon {
-    min-width: 100px;
+    min-width: 129px;
+    min-height: 131px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--baby_waluigi);
 }
 
 .inventoryDialog__titleBox {
@@ -150,21 +154,39 @@
     align-items: center;
 }
 
-.inventoryDialog__scannedAndDelete {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
+.inventoryDialog__scannedAndModify {
+    margin: 10px;
     align-items: center;
 }
 
-.inventoryDialog__scannedAndDelete button {
-    padding: 10px 20px;
+.inventoryDialog__modify {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    align-items: center;
+}
+
+.inventoryDialog__modify button {
+    padding: 10px;
     border: 2px solid var(--black);
     border-radius: 6px;
+    display: flex;
+    gap: 10px;
+}
+
+.inventoryDialog__modify button.edit {
+    background-color: var(--baby_waluigi);
+}
+
+.inventoryDialog__modify button.delete {
     background-color: var(--peach);
 }
 
-.inventoryDialog__scannedAndDelete--scanned {
+.inventoryDialog__modify button p {
+    padding: 1px;
+}
+
+.inventoryDialog__scanned {
     font-size: 12px;
 }
 
@@ -175,6 +197,33 @@ dialog {
     transform: translate(-50%, -50%);
 }
 
+.matvett-link {
+    display: flex;
+    gap: 8px;
+    color: var(--black);
+}
+
+/* Sticker */
 .newSticker {
     position: absolute;
+    z-index: 1;
 }
+
+.newSticker__big {
+    transform: scale(1.4063);
+    transform-origin: top left;
+    z-index: 5;
+}
+
+.blur-background {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: inherit;
+    background-color: black;
+    opacity: .3;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+

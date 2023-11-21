@@ -79,6 +79,9 @@ p {
   text-decoration: underline; 
 }
 
+.hidden {
+  display: none;
+}
 /* .inventory {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

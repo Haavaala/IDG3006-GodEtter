@@ -6,7 +6,7 @@ import InventoryCard from '../InventoryCard/InventoryCard';
 import Stroke from '../Stroke/Stroke';
 import SelectIcon from '../Icons/SelectIcon';
 
-export default function InventoryCategory({category, data}) {
+export default function InventoryCategory({category, data, retrieveData}) {
   if (!category && !data) return null; // Sjekker om category og data ikke eksisterer, hvis saa - ikkje gjoer naake.
 
     return (
@@ -30,6 +30,7 @@ export default function InventoryCategory({category, data}) {
           brand={i.brand}
           barcode={i.barcode}
           datestamp={i.date_added}
+          retrieveData={retrieveData}
           />
         );
         }) : <p> Du har ingen varer i denne kategorien i ditt kjøleskap. </p>}
