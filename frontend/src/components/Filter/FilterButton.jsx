@@ -15,7 +15,7 @@ function FilterButton({filterText, key, toggleFilterFunc, id, activeStatus}) {
 
   return (
     <button className={`filterButton ${active ? 'active' : ''}`} onClick={() => toggleFilter(id)} key={key}>
-      <i className="filterIcon">{active ? '-' : '+'}</i> <p className='filterText smallp'>{filterText}</p>
+      <p className='filterText smallp'><i className="filterIcon">{active ? '-' : '+'}</i></p> <p className='filterText smallp'>{filterText}</p>
     </button>
   );
 }

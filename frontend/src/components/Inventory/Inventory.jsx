@@ -4,17 +4,21 @@ import InventoryCategory from '../InventoryCategory/InventoryCategory';
 import '../Filter/filter.css'
 import FilterButton from '../Filter/FilterButton'
 
-export default function Inventory({data, categories}) {
+
+export default function Inventory({data, categories, retrieveData}) {
+
 
     if (!categories && !data) return null; // Sjekker om category og data ikke eksisterer, hvis saa - ikkje gjoer naake.
 
+    console.log(categories)
     const [toggledCategories, setToggledCategories] = useState([]);
+
 
 
     useEffect(() => {
 
 
-      if (categories && categories.length > 0) {
+      if (categories && categories.length > 0 && data && data.length > 0) {
         setToggledCategories(
           categories.map((category) => ({
             category_id: category.category_id,
@@ -23,7 +27,7 @@ export default function Inventory({data, categories}) {
           }))
         );
       }
-    }, [categories]);
+    }, [categories, data]);
 
 
       const toggleFilter = (category_id) => {
@@ -33,12 +37,13 @@ export default function Inventory({data, categories}) {
           )
         );
       };
-  
+
+      const sortedCategories = [...toggledCategories].sort((a, b) => (b.active ? 1 : -1));
 
       const filterData = (category) => {
         const filteredArray = data.filter((item) => item.category_id === category.category_id);
         if (category.active) {
-          return <InventoryCategory key={category.category_id} category={category.name} data={filteredArray} />;
+          return <InventoryCategory key={category.category_id} category={category.name} data={filteredArray} retrieveData={retrieveData}/>;
         }
     
         return null;
@@ -46,6 +51,7 @@ export default function Inventory({data, categories}) {
   
     useEffect(() => {
     }, [toggledCategories]);
+
 
   
     return (
@@ -57,13 +63,13 @@ export default function Inventory({data, categories}) {
           ))}
         </div> */}
         <div className='filter-container'>
-          {toggledCategories.map((category, index) => (
+          {sortedCategories.map((category, index) => (
             <FilterButton key={index} filterText={category.name} id={category.category_id} activeStatus={category.active} toggleFilterFunc={toggleFilter}
             />
           ))}
         </div>
                 
-        {toggledCategories.map((category) => {
+        {sortedCategories.map((category) => {
         if (category.active) {
             return filterData(category);
         }

@@ -23,6 +23,15 @@ function InventoryPage() {
 
   useEffect(() => {
     retrieveData();
+
+      // Hente data hvert 10 sekund
+      const dataInterval = setInterval(() => {
+        console.log("Refresh done");
+        retrieveData();
+      }, 10000);
+  
+      // Clean up intervalet når componentet unmountes
+      return () => clearInterval(dataInterval);
   }, []);
 
 
@@ -60,7 +69,16 @@ function InventoryPage() {
     await instance
     .post("/get_categories.php", { device_id: deviceId })
     .then((res) => {
-      setCategories(res.data.data);
+      // setCategories(res.data.data);
+
+      const fetchedCategories = res.data.data;
+
+      const updatedCategories = [
+        ...fetchedCategories.slice(1), 
+        fetchedCategories[0] 
+      ];
+    
+      setCategories(updatedCategories);
     });
   } catch (error) {
     console.error("Error fetching data",)
@@ -89,7 +107,7 @@ function InventoryPage() {
       <Stroke />
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
-      <Inventory data={data} categories={categories} search={searchInput}/>
+      <Inventory data={data} categories={categories} search={searchInput} retrieveData={retrieveData}/>
 
 
       <NotificationContent data={data} />

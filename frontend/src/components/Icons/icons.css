@@ -4,9 +4,10 @@ viewBox="0 0 44 64" */
 
 
 .svg-big {
-    width: 62px;
-    height: 90px;
+    transform: scale(1.4063);
 }
+
+/* 63 90 */
 
 .svg-small {
     width: 44px;

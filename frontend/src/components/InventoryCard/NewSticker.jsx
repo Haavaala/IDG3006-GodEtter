@@ -1,11 +1,13 @@
 import React from 'react';
 import './inventoryCard.css';
 
-export default function InventoryCard() {
+export default function InventoryCard({size}) {
+
+    const svgSizeStyle = size === 'big' ? 'newSticker__big' : ''
 
     return (
         <>
-        <div className='newSticker'>
+    <div className={`newSticker ${svgSizeStyle}`}>
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="15" cy="15" r="14.5" fill="#BFDFAC" stroke="#1A1A1A"/>
                 <path d="M13.776 19H12.576V13.864C12.576 12.616 12.24 11.896 11.088 11.896C9.664 11.896 8.656 13.304 8.656 15.192V19H7.456V11.048H8.64C8.64 11.576 8.592 12.344 8.512 12.824L8.544 12.84C8.992 11.672 10 10.904 11.392 10.904C13.216 10.904 13.776 12.04 13.776 13.464V19ZM22.4541 11.048L19.1581 19.752C18.2141 22.248 17.2701 23.112 15.4941 23.112C15.2381 23.112 14.8861 23.064 14.6461 23.016L14.7741 21.944C15.0301 22.008 15.4141 22.056 15.7181 22.056C16.6141 22.056 17.3021 21.624 17.9421 19.928L18.2941 19L15.2541 11.048H16.6301L18.2941 15.608C18.5501 16.328 18.7261 16.904 18.9021 17.496H18.9181C19.0621 16.984 19.3981 15.992 19.7181 15.08L21.1421 11.048H22.4541Z" fill="#1A1A1A"/>
