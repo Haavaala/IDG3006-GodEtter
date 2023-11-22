@@ -4,6 +4,7 @@ import "./notificationContent.css";
 import EditItem from "../EditItem/EditItem";
 import instance from "../../instance";
 import { confirmAlert } from 'react-confirm-alert'; // Import
+import Button from "../Button/Button";
 
 function NotificationContent() {
 
@@ -16,23 +17,6 @@ function NotificationContent() {
   const [editDate, setEditDate] = useState("");
 
   const editDialogRef = useRef();
-
-  const submit = (b,d) => {
-    confirmAlert({
-      title: 'Delete item',
-      message: 'Are you sure you want to delete this item?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => handleDeleteItem(b,d)
-        },
-        {
-          label: 'No',
-          onClick: () => {}
-        }
-      ]
-    });
-  };
 
   useEffect(() => {
     retrieveData();
@@ -152,15 +136,15 @@ function NotificationContent() {
                       <>
                         <p>Oops! Vi fant ikke varen som ble scannet og lagt til i Ditt Kjøleskap {i.date_added}, den ble tildelt navn “Udefinert vare”.</p>
                         <div className="notification-bar__buttons">
-                        <button  onClick={() => {
+                        <Button  icon={true} type={1} func={() => {
                             setEditBarcode(i.barcode);
                             setEditDate(i.date_added);
                             toggleEditDialog();
-                          }} className="edit_button--notification">Registrer varen manuelt</button>
-                        <button onClick={() => {
-                          submit(i.barcode, i.date_added);
+                          }} >Registrer varen manuelt</Button>
+                        <Button icon={true} type={2} option={2} func={() => {
+                          handleDeleteItem(i.barcode, i.date_added);
                           
-                        }} className="delete_button--notification">Slett varen</button>
+                        }} >Slett varen</Button>
                         </div>
                       </>
                     ) : (

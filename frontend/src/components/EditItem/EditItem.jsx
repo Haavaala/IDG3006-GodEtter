@@ -183,8 +183,14 @@ function EditItem({ barcode, dateScanned, toggleEditDialog }) {
                   ))}
                 </select>
               </div>
-              <Button type={1} option={1}>Lagre vare</Button>
-              <Button type={2} option={2} func={toggleEditDialog}>Avbryt</Button>
+              <div className="button-container">
+                <Button type={1} option={1}>
+                  Lagre vare
+                </Button>
+                <Button type={2} option={2} func={toggleEditDialog}>
+                  Avbryt
+                </Button>
+              </div>
             </form>
           </div>
         </div>
