@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 function NotificationContent({data}) {
   if(!data) return null
-  console.log(data)
+  // console.log(data)
 
   const navigate = useNavigate();
   
   const [message, setMessage] = useState()
   //legge det som er data i en egen usestate for varsler så det er mulig å slette varsler og ha de nyeste varslene og når det er ny varsel skal det indikeres med tegn i bjella
-  //hver message kan ha en egen "ny" som er true eller false - en som er for om den er relevant eller ikke
+  //hver message kan ha en egen "ny-sticker typ" som er true eller false - en som er for om den er relevant eller ikke
 
 
   const formatDate = (date) => {

@@ -8,17 +8,17 @@
 }
 
 .filter-container::-webkit-scrollbar{
-    width: 2.5px; /* Set the width of the scrollbar */
+    width: 2.5px; 
     position: absolute;
-    right: 0; /* Position the scrollbar on the right of the element*/
+    right: 0; 
     height: 5px;
     margin: 10px;
     border-radius: 5px;
 }
 
 .filter-container::-webkit-scrollbar-thumb {
-    /* background-color: #59704B; */
     background-color: #4A5085;
+    border-radius: 5px;
  }
  ::-webkit-scrollbar-track {
     background: var(--light_grey);

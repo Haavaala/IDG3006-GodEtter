@@ -28,6 +28,7 @@ function App() {
     <Route path="/Grocerylist" element={<GroceryListPage />} />
   </Routes>
   <Navbar />
+  <div className="bottom-space"></div>
 </>
   );
 }
