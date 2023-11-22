@@ -4,3 +4,16 @@
     gap: 16px;
     padding: 10px 10px 0;
 }
+
+.red_dotBellIcon:hover, .bellIcon:hover{
+cursor: pointer;
+}
+
+.topMenu__inside {
+    display: flex;
+    justify-content: space-between;
+}
+
+.topMenu__inside--back {
+    padding: 10px 10px 0;
+}

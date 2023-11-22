@@ -150,27 +150,18 @@ function NotificationContent() {
                   <div className="notification-bar">
                     {i.name === "" ? (
                       <>
-                        <p>
-                          Oops! Vi fant ikke varen som ble scannet og lagt til i
-                          Ditt Kjøleskap {i.date_added}, den ble tildelt navn
-                          “Udefinert vare”.
-                        </p>
-                        <button
-                          onClick={() => {
+                        <p>Oops! Vi fant ikke varen som ble scannet og lagt til i Ditt Kjøleskap {i.date_added}, den ble tildelt navn “Udefinert vare”.</p>
+                        <div className="notification-bar__buttons">
+                        <button  onClick={() => {
                             setEditBarcode(i.barcode);
                             setEditDate(i.date_added);
                             toggleEditDialog();
-                          }}
-                          className="edit_button--notification"
-                        >
-                          Rediger vare
-                        </button>
-                        <button className="delete_button--notification" onClick={() => {
+                          }} className="edit_button--notification">Registrer varen manuelt</button>
+                        <button onClick={() => {
                           submit(i.barcode, i.date_added);
                           
-                        }}>
-                          Slett vare
-                        </button>
+                        }} className="delete_button--notification">Slett varen</button>
+                        </div>
                       </>
                     ) : (
                       <p>

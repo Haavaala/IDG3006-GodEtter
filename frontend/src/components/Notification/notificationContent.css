@@ -3,19 +3,27 @@
     margin: 0 auto;
 }
 
-.notification-bar {
-    max-width: 90%;
-    text-align: center;
-    margin: 1rem;
+.notification-bar{
+max-width: 90%;
+/* text-align: center; */
+margin: 1rem;
 }
 
-.edit_button--notification {
+.notification-bar__buttons {
+    display: flex;
+    width: 100%;
+}
+
+.edit_button--notification, .delete_button--notification {
+    padding: 10px 16px;
+}
+
+.edit_button--notification{
     background-color: var(--baby_waluigi);
-    padding: 0.5rem;
-    margin-right: 1rem;
+    margin-right: 10px;
     border-radius: 5px;
     border: 1px solid black;
-    margin-top: 1rem;
+    margin-top: 10px;
 }
 
 .delete_button--notification {
@@ -105,4 +113,8 @@ body.react-confirm-alert-body-element {
     border: 2px solid var(--waluigi);
     margin-top: 1rem;
     cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-top: 10px;
+    flex: 1;
 }
