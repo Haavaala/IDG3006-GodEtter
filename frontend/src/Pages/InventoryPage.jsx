@@ -121,7 +121,6 @@ function InventoryPage() {
         search={searchInput}
         retrieveData={retrieveData}
       />
-      <Inventory data={data} categories={categories} search={searchInput} retrieveData={retrieveData}/>
     </>
   );
 }

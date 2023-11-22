@@ -360,22 +360,8 @@ export default function InventoryCard({
           <div className="inventoryCard__stroke--horizontal" />
           <div className="inventoryDialog__scannedAndModify">
             <p className="inventoryDialog__scanned">
-              Scannet{" "}
-              <span className="smallp">
-                {formatDate(dateScanned)} kl. {formatTime(dateScanned)}
-              </span>
-            </div>
-          <div className="inventoryDialog__details--allergener">
-            <p className="smallp medium">Allergener:</p>
-            <p className="smallp">{allergens ? allergens : "Ingen"}</p>
-          </div>
-        </div>
-        <div className="inventoryCard__stroke--horizontal" />
-        <div className="inventoryDialog__scannedAndModify">
-          <p className="inventoryDialog__scanned">
-            Scannet <span className="smallp">{formatDate(dateScanned)} kl. {formatTime(dateScanned)}</span>
-          </p>
-
+              Scannet{" "}<span className="smallp">{formatDate(dateScanned)} kl. {formatTime(dateScanned)}</span></p>
+            
           <div className="inventoryDialog__modify">
               <button
                 className="edit"
