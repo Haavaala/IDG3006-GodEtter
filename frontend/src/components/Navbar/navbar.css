@@ -3,12 +3,12 @@ nav {
     justify-content: center;
     background-color: var(--black);
     color: var(--white);
-    min-height: 7vh;
-    margin: 1rem;
+    min-height: 68px;
+    margin: 20px;
     border-radius: 20px;
 
     position: fixed;
-    width: 70%;
+    width: 265px;
     bottom: 0;
     left: 10%;
     z-index: 5;

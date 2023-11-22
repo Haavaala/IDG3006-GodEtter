@@ -5,7 +5,6 @@ import Searchbar from "../components/Searchbar/Searchbar";
 import Stroke from "../components/Stroke/Stroke";
 import TopMenu from "../components/TopMenu/TopMenu";
 import Inventory from "../components/Inventory/Inventory";
-import NotificationContent from "../components/Notification/NotificationContent";
 
 function InventoryPage() {
   const [data, setData] = useState([]); // Inventory data
@@ -108,9 +107,6 @@ function InventoryPage() {
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
       <Inventory data={data} categories={categories} search={searchInput} retrieveData={retrieveData}/>
-
-
-      {/* <NotificationContent data={data} /> */}
     </>
   );
 }

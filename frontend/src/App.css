@@ -82,6 +82,20 @@ p {
 .hidden {
   display: none;
 }
+
+.green {
+  color: #6B8F55;
+}
+
+.red {
+  color: var(--peach);
+}
+
+.bottom-space {
+  height: 90px;
+  width: 100%;
+}
+
 /* .inventory {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
