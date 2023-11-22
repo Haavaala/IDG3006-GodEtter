@@ -87,10 +87,12 @@ function NotificationContent({data}) {
                     {i.name === '' ? (
                       <>
                         <p>Oops! Vi fant ikke varen som ble scannet og lagt til i Ditt Kjøleskap {i.date_added}, den ble tildelt navn “Udefinert vare”.</p>
+                        <div className="notification-bar__buttons">
                         <button  onClick={() =>{
                       navigate(`/Edititem/${i.barcode}/${i.date_added}`)
-                    }} className="edit_button--notification">Rediger vare</button>
-                        <button className="delete_button--notification">Slett vare</button>
+                    }} className="edit_button--notification">Registrer varen manuelt</button>
+                        <button className="delete_button--notification">Slett varen</button>
+                        </div>
                       </>
                     ) : (
                       <p>Varen "{i.name}" ble scannet og lagt til i Ditt Kjøleskap {i.date_added}.</p>

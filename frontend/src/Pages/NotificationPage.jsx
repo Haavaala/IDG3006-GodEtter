@@ -2,6 +2,7 @@ import React from 'react'
 import NotificationContent from '../components/Notification/NotificationContent'
 import { useLocation } from 'react-router-dom'
 import TopMenu from '../components/TopMenu/TopMenu';
+import TopMenuInside from '../components/TopMenu/TopMenuInside';
 
 function NotificationPage() {
   const location = useLocation();
@@ -9,7 +10,7 @@ function NotificationPage() {
 
   return (
     <>
-      <TopMenu />
+      <TopMenuInside notifications />
       <NotificationContent data={passedData}></NotificationContent>
     </>
   )
