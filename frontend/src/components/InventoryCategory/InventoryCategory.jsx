@@ -31,6 +31,9 @@ export default function InventoryCategory({category, data, retrieveData}) {
           barcode={i.barcode}
           datestamp={i.date_added}
           retrieveData={retrieveData}
+          weight={i.weight}
+          weight_unit={i.weight_unit}
+          category_id={i.category_id}
           />
         );
         }) : <p> Du har ingen varer i denne kategorien i ditt kjøleskap. </p>}

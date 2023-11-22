@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./edititem.css";
-import Stroke from "../Stroke/Stroke";
 import instance from "../../instance";
 import { useForm } from "react-hook-form";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
 
-function EditItem() {
-  const [data, setData] = useState([]); // Inventory data
-  const [allData, setAllData] = useState([]);
-  const [categories, setCategories] = useState([]);
+function EditItem({barcode, dateScanned, toggleEditDialog}) {
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const { barcode, dateScanned } = useParams();
-  const navigate = useNavigate()
+  const [categories, setCategories] = useState([]);
 
   const {
     register,
@@ -23,7 +17,7 @@ function EditItem() {
 
   const retrieveData = async () => {
     try {
-      // Hent alle kategorier
+      // Retrieve all categories again, this allows us to not have to pass the categories prop down so much.
       const deviceId = 1001;
       await instance
         .post("/get_categories.php", { device_id: deviceId })
@@ -32,6 +26,7 @@ function EditItem() {
         });
     } catch (error) {
       console.error("Error fetching data");
+      toggleEditDialog();
     }
   };
 
@@ -57,11 +52,16 @@ function EditItem() {
   
       const itemData = res.data.data[0];
       setData(itemData);
-  
+
+      const date = new Date(itemData.date_bestbefore);
+      
+      // Format the date so JavaScript understands (tulling)
+      const formatDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+
       const defaultValues = {
         name: itemData.name,
         brand: itemData.brand,
-        date_bestbefore: itemData.date_bestbefore,
+        date_bestbefore: formatDate,
         weight: itemData.weight,
         weight_unit: itemData.weight_unit,
         allergens: itemData.allergens,
@@ -92,8 +92,7 @@ function EditItem() {
         )
         .then((res) => {
           console.log("SENDTE DATA DIN ...");
-          
-          navigate("/")
+          toggleEditDialog();
         });
     } catch (error) {
       console.error("Error when editing item data");
@@ -186,9 +185,7 @@ function EditItem() {
                 </select>
               </div>
               <input type="submit" value="Lagre vare" />
-              <button className="avbryt" onClick={() => {
-                navigate("/")
-              }}>Avbryt</button>
+              <button className="avbryt" onClick={toggleEditDialog}>Avbryt</button>
             </form>
           </div>
         </div>
