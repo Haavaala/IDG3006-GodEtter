@@ -180,19 +180,10 @@ export default function InventoryCard({
 
       const today = new Date();
       // return today <= twoWeeksLater ? "#59704B" : "#BD6F4E";
-      return (today < dateBestBeforeObject) 
+      return (today <= twoWeeksLater ) 
     } else {
-      // Compare with today's date
       const today = new Date();
       return (today < dateBestBeforeObject) 
-      
-      //   // Best before date has passed, set icon color to red
-      //   // return "#BD6F4E";
-      //   return true;
-      // } else {
-      //   // Best before date is still valid, set icon color to green
-      //   return "#59704B";
-      // }
     }
   };
 
