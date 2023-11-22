@@ -163,12 +163,14 @@
     padding-top: 16px;
 }
 
-.inventoryDialog__modify {
+ .inventoryDialog__modify {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
     align-items: center;
 }
+
+/*
 
 .inventoryDialog__modify button {
     padding: 5px;
@@ -189,7 +191,7 @@
 
 .inventoryDialog__modify button p {
     padding: 1px;
-}
+} */
 
 .inventoryDialog__scanned {
     font-size: 12px;

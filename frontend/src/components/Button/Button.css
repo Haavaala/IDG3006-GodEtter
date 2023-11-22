@@ -13,6 +13,7 @@
     margin-top: .5em;
     margin-bottom: .5em;
     cursor:pointer;
+    gap: 10px;
 }
 
 .button img {
