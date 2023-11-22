@@ -3,22 +3,26 @@
     margin: 0 auto;
 }
 
-.notification-bar{
-max-width: 90%;
-/* text-align: center; */
-margin: 1rem;
+.notification-bar {
+    max-width: 90%;
+    /* text-align: center; */
+    margin: 1rem;
 }
 
 .notification-bar__buttons {
-    display: flex;
-    width: 100%;
+    width:100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+
 }
 
-.edit_button--notification, .delete_button--notification {
+.edit_button--notification,
+.delete_button--notification {
     padding: 10px 16px;
 }
 
-.edit_button--notification{
+.edit_button--notification {
     background-color: var(--baby_waluigi);
     margin-right: 10px;
     border-radius: 5px;
@@ -28,7 +32,7 @@ margin: 1rem;
 
 .delete_button--notification {
     background-color: var(--white);
-    border: 2px solid #A54E1E;
+    border: 2px solid #a54e1e;
     padding: 0.5rem;
     border-radius: 5px;
 }
@@ -50,7 +54,7 @@ body.react-confirm-alert-body-element {
     right: 0;
     bottom: 0;
     z-index: 7;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,7 +64,7 @@ body.react-confirm-alert-body-element {
 .react-confirm-alert-body {
     padding: 30px;
     text-align: center;
-    background: #fff;
+    background: var(--white);
     border-radius: 5px;
     box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
     border: 1px solid;
