@@ -1,7 +1,5 @@
 .editItem-modal {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   background: #fff;
   padding: 20px;
@@ -19,6 +17,11 @@
   margin-top: 20px;
 }
 
+.editItem-form form button{
+  margin: .5em auto;
+}
+
+
 .seksjon {
   display: flex;
   flex-direction: row;
@@ -27,19 +30,37 @@
 }
 
 .editItem-form label {
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
   font-weight: bold;
   width: 100px;
 }
 
-.editItem-form input,
+.editItem-form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--black);
+  border-radius: 4px;
+  margin-left: 1rem;
+}
+
 .editItem-form select {
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--black);
   border-radius: 4px;
   margin-left: 1rem;
+  height: 35px;
+}
+
+.editItem-form select {
+  text-align: left;
+  padding-top: 4px;
+}
+
+#measurements {
+  min-width: 5em;
 }
 
 .mengde-div {
@@ -49,25 +70,21 @@
   margin: 1rem;
 }
 
-.mengde-div > label:nth-child(3){
+.mengde-div > label:nth-child(3) {
   margin-right: -3rem;
   margin-left: 1rem;
 }
 
-.mengde-div > label:nth-child(1){
-  margin-right: -2rem;
+.mengde-div > label:nth-child(1) {
+  margin-right: -2.5rem;
 }
 
-.mengde-div > input{
+.mengde-div > input {
   width: 2.5rem;
 }
 
-.mengde-div > select{
+.mengde-div > select {
   max-width: 4rem;
-}
-
-.editItem-form select {
-  font-size: 16px;
 }
 
 .editItem-form input[type="submit"] {
@@ -77,9 +94,11 @@
   margin: 0 auto;
   margin-bottom: 1rem;
   background: var(--baby_waluigi);
-  color: black;
+  color: var(--black);
   cursor: pointer;
-  width: 50%;
+    width:119px;
+  height:30px;
+  border: solid var(--black) 1px;
 }
 
 .editItem-form input[type="submit"]:hover {
@@ -91,10 +110,13 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  background-color: var(--baby_waluigi);
+  background-color: var(--white);
   border: none;
   border-radius: 5px;
   width: 4rem;
   height: 2rem;
-  color: black;
+  color: var(--black);
+  border: solid var(--peach) 1px;
+  width:119px;
+  height:30px;
 }

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./edititem.css";
 import instance from "../../instance";
 import { useForm } from "react-hook-form";
+import Stroke from "../Stroke/Stroke";
+import Button from "../Button/Button";
 
-function EditItem({barcode, dateScanned, toggleEditDialog}) {
+function EditItem({ barcode, dateScanned, toggleEditDialog }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -40,8 +42,7 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
     }
   }, [categories]);
 
-
-  //fetch specific item 
+  //fetch specific item
   const fetchSpecificItem = async () => {
     const device_id = 1001;
     try {
@@ -49,14 +50,15 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
         device_id: device_id,
         datestamp: dateScanned,
       });
-  
+
       const itemData = res.data.data[0];
       setData(itemData);
 
       const date = new Date(itemData.date_bestbefore);
-      
+
       // Format the date so JavaScript understands (tulling)
-      const formatDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+      const formatDate =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
       const defaultValues = {
         name: itemData.name,
@@ -67,14 +69,13 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
         allergens: itemData.allergens,
         category_id: itemData.category_id,
       };
-  
+
       reset(defaultValues);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching item details", error);
     }
   };
-  
 
   useEffect(() => {
     fetchSpecificItem();
@@ -86,10 +87,7 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
       data.device_id = 1001;
       data.datestamp = dateScanned;
       await instance
-        .post(
-          `/edit_item.php?barcode=${barcode}`,
-          data
-        )
+        .post(`/edit_item.php?barcode=${barcode}`, data)
         .then((res) => {
           console.log("SENDTE DATA DIN ...");
           toggleEditDialog();
@@ -106,7 +104,7 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
       ) : data ? (
         <div className="editItem-modal">
           <h1>Vareføring</h1>
-          {/* <Stroke /> */}
+          <Stroke />
           <div className="editItem-form">
             <form
               onSubmit={handleSubmit((data) => {
@@ -115,7 +113,7 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
               })}
             >
               <div className="seksjon">
-                <label htmlFor="matvare">Matvare</label>
+                <label htmlFor="matvare">Matvare:</label>
                 <input
                   name="matvare"
                   type="text"
@@ -123,7 +121,7 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
                 />
               </div>
               <div className="seksjon">
-                <label htmlFor="brand">Merke</label>
+                <label htmlFor="brand">Merke:</label>
                 <input
                   name="brand"
                   type="text"
@@ -139,14 +137,15 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
                 />
               </div>
               <div className="mengde-div">
-                <label htmlFor="mengde">Mengde</label>
+                <label htmlFor="mengde">Mengde:</label>
+
                 <input
                   name="mengde"
                   type="number"
                   placeholder={data.weight}
                   {...register("weight", { required: true })}
                 />
-                <label htmlFor="mengde-enhet">Enhet</label>
+                {/* <label htmlFor="mengde-enhet">Enhet</label> */}
                 <select
                   id="measurements"
                   name="mengde-enhet"
@@ -163,7 +162,7 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
                 </select>
               </div>
               <div className="seksjon">
-                <label htmlFor="allergener">Allergener</label>
+                <label htmlFor="allergener">Allergener:</label>
                 <input
                   name="allergener"
                   type="text"
@@ -171,7 +170,7 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
                 />
               </div>
               <div className="seksjon">
-                <label htmlFor="category_id">Kategori</label>
+                <label htmlFor="category_id">Kategori:</label>
                 <select
                   name="category_id"
                   id="category_id"
@@ -184,15 +183,14 @@ function EditItem({barcode, dateScanned, toggleEditDialog}) {
                   ))}
                 </select>
               </div>
-              <input type="submit" value="Lagre vare" />
-              <button className="avbryt" onClick={toggleEditDialog}>Avbryt</button>
+              <Button type={1} option={1}>Lagre vare</Button>
+              <Button type={2} option={2} func={toggleEditDialog}>Avbryt</Button>
             </form>
           </div>
         </div>
-         ) : null}
-      
+      ) : null}
     </>
   );
-                  }
+}
 
 export default EditItem;
