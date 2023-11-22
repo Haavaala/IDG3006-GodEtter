@@ -30,9 +30,9 @@ export default function TopMenu({ data }) {
     <>
       <div className="topMenu">
         {isNewItem ? (
-          <RedDotIcon onClick={handleNotificationClick} />
+          <RedDotIcon className="red_dotBellIcon" onClick={handleNotificationClick} />
         ) : (
-          <Notification onClick={handleNotificationClick} />
+          <Notification className="bellIcon" onClick={handleNotificationClick} />
         )}
         <Settings />
       </div>
