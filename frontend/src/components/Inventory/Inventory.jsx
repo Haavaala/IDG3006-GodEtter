@@ -27,7 +27,7 @@ export default function Inventory({data, categories, retrieveData}) {
           }))
         );
       }
-    }, [categories, data]);
+    }, [categories]);
 
 
       const toggleFilter = (category_id) => {

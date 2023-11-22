@@ -12,7 +12,9 @@ function InventoryPage() {
   const [categories, setCategories] = useState([]); // Categories
 
   const [searchInput, setSearchInput] = useState("");
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+
+  const [initialFetch, setInitialFetch] = useState(false);
 
   // const [searchedData, setSearchedData] = useState([]);
 
@@ -20,84 +22,91 @@ function InventoryPage() {
   //   setSearchInput(event.target.value);
   // };
 
-  useEffect(() => {
-    retrieveData();
+  // Set device id
+  const deviceId = 1001;
 
-      // Hente data hvert 10 sekund
-      const dataInterval = setInterval(() => {
-        console.log("Refresh done");
-        retrieveData();
-      }, 10000);
-  
-      // Clean up intervalet når componentet unmountes
-      return () => clearInterval(dataInterval);
+  useEffect(() => {
+    if (!initialFetch){ 
+      retrieveAllData();
+      setInitialFetch(true);
+    }
+    
+
+    // Hente data hvert 10 sekund
+    const dataInterval = setInterval(() => {
+      console.log("Refresh done");
+      retrieveData();
+    }, 10000);
+
+    // Clean up intervalet når componentet unmountes
+    return () => clearInterval(dataInterval);
   }, []);
 
-
   useEffect(() => {
-    if (searchInput != ""){
-      setData(allData.filter((item) =>
-        item.name.toLowerCase().includes(searchInput.toLowerCase())
-      ));
+    if (searchInput != "") {
+      setData(
+        allData.filter((item) =>
+          item.name.toLowerCase().includes(searchInput.toLowerCase())
+        )
+      );
     } else {
       setData(allData);
     }
     console.log(data);
     console.log(searchInput);
-  }, [searchInput])
-  
-
-
+  }, [searchInput]);
 
   const retrieveData = async () => {
-    try{
-
-      // Set device id
-      const deviceId = 1001;
-      
+    try {
       // Axios POST req til /get_device_inventory.php med deviceId i data
       // Hent kjøleskapet
-    await instance
-    .post("/get_device_inventory.php", { device_id: deviceId })
-    .then((res) => {
-      setData(res.data.data);
-      setAllData(res.data.data);
-    });
-    
-    // Hent alle kategorier
-    await instance
-    .post("/get_categories.php", { device_id: deviceId })
-    .then((res) => {
-      // setCategories(res.data.data);
+      await instance
+        .post("/get_device_inventory.php", { device_id: deviceId })
+        .then((res) => {
+          setData(res.data.data);
+          setAllData(res.data.data);
+        });
+    } catch (error) {
+      console.error("Error in fridge data");
+    }
+  };
 
-      const fetchedCategories = res.data.data;
+  const retrieveAllData = async () => {
+    try {
+      // Retrieve fridge data
+      await retrieveData();
 
-      const updatedCategories = [
-        ...fetchedCategories.slice(1), 
-        fetchedCategories[0] 
-      ];
-    
-      setCategories(updatedCategories);
-    });
-  } catch (error) {
-    console.error("Error fetching data",)
-  }
-    
+      // Hent alle kategorier
+      await instance
+        .post("/get_categories.php", { device_id: deviceId })
+        .then((res) => {
+          // setCategories(res.data.data);
 
+          const fetchedCategories = res.data.data;
+
+          const updatedCategories = [
+            ...fetchedCategories.slice(1),
+            fetchedCategories[0],
+          ];
+
+          setCategories(updatedCategories);
+        });
+    } catch (error) {
+      console.error("Error fetching data");
+    }
   };
 
   useEffect(() => {
-    if (data && categories){
-      setLoading(false)
+    if (data && categories) {
+      setLoading(false);
     }
-
-  },[data,categories])
+  }, [data, categories]);
 
   if (!data) return null;
 
-  if(loading){
+  if (loading) {
     console.log("LASTER");
-    return <p>Laster...</p>
+    return <p>Laster...</p>;
   }
   return (
     <>
@@ -106,6 +115,12 @@ function InventoryPage() {
       <Stroke />
       <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
       <Stroke />
+      <Inventory
+        data={data}
+        categories={categories}
+        search={searchInput}
+        retrieveData={retrieveData}
+      />
       <Inventory data={data} categories={categories} search={searchInput} retrieveData={retrieveData}/>
     </>
   );
