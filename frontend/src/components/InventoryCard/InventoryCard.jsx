@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import "./inventoryCard.css";
 import NewSticker from "./NewSticker";
 import instance from "../../instance";
-import { useNavigate, useParams } from "react-router-dom";
 import EditItem from "../EditItem/EditItem";
 
 export default function InventoryCard({
@@ -19,7 +18,6 @@ export default function InventoryCard({
   retrieveData,
   edited
 }) {
-  const navigate = useNavigate();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);

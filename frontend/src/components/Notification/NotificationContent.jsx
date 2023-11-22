@@ -1,24 +1,79 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Stroke from "../Stroke/Stroke";
 import "./notificationContent.css";
+import EditItem from "../EditItem/EditItem";
 import instance from "../../instance";
-import { useNavigate } from "react-router-dom";
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
-function NotificationContent({data}) {
-  if(!data) return null
-  // console.log(data)
+function NotificationContent() {
 
-  const navigate = useNavigate();
+  const deviceId = 1001;
+
+  const [data, setData] = useState([]);
+
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editBarcode, setEditBarcode] = useState("");
+  const [editDate, setEditDate] = useState("");
+
+  const editDialogRef = useRef();
+
+  const submit = (b,d) => {
+    confirmAlert({
+      title: 'Delete item',
+      message: 'Are you sure you want to delete this item?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => handleDeleteItem(b,d)
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    });
+  };
+
+  useEffect(() => {
+    retrieveData();
+  }, [])
   
-  const [message, setMessage] = useState()
-  //legge det som er data i en egen usestate for varsler så det er mulig å slette varsler og ha de nyeste varslene og når det er ny varsel skal det indikeres med tegn i bjella
-  //hver message kan ha en egen "ny-sticker typ" som er true eller false - en som er for om den er relevant eller ikke
 
+  const retrieveData = async () => {
+    try {
+      // Axios POST req til /get_device_inventory.php med deviceId i data
+      // Hent kjøleskapet
+      await instance
+        .post("/get_device_inventory.php", { device_id: deviceId })
+        .then((res) => {
+          setData(res.data.data);
+        });
+    } catch (error) {
+      console.error("Error in fridge data");
+    }
+  };
+
+  const handleDeleteItem = (dBarcode, dDatestamp) => {
+    const postdata = {
+      device_id: deviceId,
+      datestamp: dDatestamp,
+    };
+
+    instance
+      .post(`/delete_item.php?barcode=${dBarcode}`, postdata)
+      .then((response) => {
+        console.log(`Du sletta den ${dBarcode}`, response.data);
+        retrieveData();
+      })
+      .catch((error) => {
+        console.error("Error ved sletting item", error);
+      });
+  };
 
   const formatDate = (date) => {
     date.split(" ")[0];
     const dateObject = new Date(date);
-    
+
     const dateScannedSplit = dateScanned.split(" ")[0];
     const dateScannedObject = new Date(dateScannedSplit);
 
@@ -27,10 +82,12 @@ function NotificationContent({data}) {
     let year = "";
 
     if (isNaN(dateObject)) {
-      const twoWeeksLater = new Date(dateScannedObject.getTime() + 14 * 24 * 60 * 60 * 1000);
+      const twoWeeksLater = new Date(
+        dateScannedObject.getTime() + 14 * 24 * 60 * 60 * 1000
+      );
 
-      day = twoWeeksLater.getDate().toString().padStart(2, '0');
-      month = (twoWeeksLater.getMonth() + 1).toString().padStart(2, '0'); 
+      day = twoWeeksLater.getDate().toString().padStart(2, "0");
+      month = (twoWeeksLater.getMonth() + 1).toString().padStart(2, "0");
       year = twoWeeksLater.getFullYear();
     } else {
       day = dateObject.getDate().toString().padStart(2, "0");
@@ -40,6 +97,11 @@ function NotificationContent({data}) {
 
     const formattedDate = `${day}.${month}.${year}`;
     return formattedDate;
+  };
+
+  // Function for toggling the edit dialog
+  const toggleEditDialog = () => {
+    setIsEditDialogOpen(!isEditDialogOpen);
   };
 
   // const checkDate = (date, name) => {
@@ -58,13 +120,15 @@ function NotificationContent({data}) {
   //       <div>
   //       {(name === '')?<p>Oops! Varen “{name}” ble scannet og lagt til i Ditt Kjøleskap {date}.</p>:<p>Varen “{name}” ble scannet og lagt til i Ditt Kjøleskap {date}.</p>}
   //       {(name === '')?<button>Hei</button>:''}
-        
+
   //       </div>
   //       <Stroke />
   //     </>
   //   )
   // }
   // };
+
+  if (!data) return null;
 
   return (
     <>
@@ -84,18 +148,26 @@ function NotificationContent({data}) {
               return (
                 <>
                   <div className="notification-bar">
-                    {i.name === '' ? (
+                    {i.name === "" ? (
                       <>
                         <p>Oops! Vi fant ikke varen som ble scannet og lagt til i Ditt Kjøleskap {i.date_added}, den ble tildelt navn “Udefinert vare”.</p>
                         <div className="notification-bar__buttons">
-                        <button  onClick={() =>{
-                      navigate(`/Edititem/${i.barcode}/${i.date_added}`)
-                    }} className="edit_button--notification">Registrer varen manuelt</button>
-                        <button className="delete_button--notification">Slett varen</button>
+                        <button  onClick={() => {
+                            setEditBarcode(i.barcode);
+                            setEditDate(i.date_added);
+                            toggleEditDialog();
+                          }} className="edit_button--notification">Registrer varen manuelt</button>
+                        <button onClick={() => {
+                          submit(i.barcode, i.date_added);
+                          
+                        }} className="delete_button--notification">Slett varen</button>
                         </div>
                       </>
                     ) : (
-                      <p>Varen "{i.name}" ble scannet og lagt til i Ditt Kjøleskap {i.date_added}.</p>
+                      <p>
+                        Varen "{i.name}" ble scannet og lagt til i Ditt
+                        Kjøleskap {i.date_added}.
+                      </p>
                     )}
                   </div>
                   <Stroke />
@@ -107,6 +179,16 @@ function NotificationContent({data}) {
           <p> Du har ingen varer nylig lagt inn i ditt kjøleskap. </p>
         )}
       </div>
+
+      {isEditDialogOpen && (
+        <dialog className="editDialog" ref={editDialogRef} open>
+          <EditItem
+            barcode={editBarcode}
+            dateScanned={editDate}
+            toggleEditDialog={toggleEditDialog}
+          />
+        </dialog>
+      )}
     </>
   );
 }

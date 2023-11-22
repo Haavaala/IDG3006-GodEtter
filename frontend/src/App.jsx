@@ -16,16 +16,12 @@ function App() {
   <Routes>
     <Route path="/">
       <Route index element={<InventoryPage />} />
-      <Route path="/Notifications" element={<NotificationPage />} />
+      <Route path="/notifications" element={<NotificationPage />} />
     </Route>
 
-    <Route path="/Recipe" element={<RecipePage />} />
-    <Route
-      path="/Edititem/:barcode/:dateScanned"
-      element={<ItemEditPage />}
-    />
+    <Route path="/recipe" element={<RecipePage />} />
 
-    <Route path="/Grocerylist" element={<GroceryListPage />} />
+    <Route path="/grocerylist" element={<GroceryListPage />} />
   </Routes>
   <Navbar />
   <div className="bottom-space"></div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Notification from "../Notification/Notification";
 import Settings from "../Settings/Settings";
 import "./topMenu.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function TopMenu({ data }) {
 
@@ -23,7 +23,7 @@ export default function TopMenu({ data }) {
   });
 
   const handleNotificationClick = () => {
-    navigate(`/Notifications`, { state: data });
+    navigate("/notifications")
     setNotificationContentOpened(true);
   };
 

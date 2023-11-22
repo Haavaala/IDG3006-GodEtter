@@ -10,18 +10,22 @@
   --baby_peach: #E8AF90;
   --peach: #BD6F4E;
   --baby_waluigi: #B0B4DF;
+  --waluigi: #7680D2;
+  --baby_luigi:#BFDFAC;
+  --tanooki_mario:#A54E1E;
+  --petey_pirahna:#59704B;
 }
 
 @font-face {
   font-family: 'Loos Normal';
-  src: local('assets/fonts/loos-normal-regular.otf');
+  src: url('./assets/fonts/loos-normal-regular.otf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Loos Normal';
-  src: local('assets/fonts/loos-normal-light.otf');
+  src: url('./assets/fonts/loos-normal-light.otf');
   font-weight: lighter;
   font-style: normal;
 }
@@ -36,6 +40,12 @@ body {
   background-color: var(--white);
 }
 
+* {
+  font-size: 14px;
+  font-family: "Loos Normal";
+  font-weight: normal;
+}
+
 h1, h2, h3 {
   font-family: "Young Serif", serif;
 }
@@ -47,12 +57,6 @@ h1 {
 h2 {
   font-size: 24px;
   margin: 0 24px;
-}
-
-p {
-  font-size: 14px;
-  font-family: "Loos Normal";
-  font-weight: normal;
 }
 
 .smallp {
