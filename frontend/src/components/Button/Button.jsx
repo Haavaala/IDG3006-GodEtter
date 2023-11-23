@@ -39,7 +39,7 @@ export default function Button({ type, option, icon, func, children, form }) {
   }, [type, option]);
 
   const returnIcon = () => {
-    console.log("Type:" + type)
+    console.log("Type:" + type);
     switch (type) {
       case 1:
         return <img src="./svg/editicon.svg" alt="Edit icon" />;

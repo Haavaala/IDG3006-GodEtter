@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./edititem.css";
 import instance from "../../instance";
 import { useForm } from "react-hook-form";
@@ -56,7 +56,7 @@ function EditItem({ barcode, dateScanned, toggleEditDialog }) {
 
       const date = new Date(itemData.date_bestbefore);
 
-      // Format the date so JavaScript understands (tulling)
+      // Format the date so JavaScript understands
       const formatDate =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
@@ -81,7 +81,7 @@ function EditItem({ barcode, dateScanned, toggleEditDialog }) {
     fetchSpecificItem();
   }, [barcode]);
 
-  //post new item-information to the specific item
+  // post new item-information to the specific item
   const handleFormSubmit = async (data) => {
     try {
       data.device_id = 1001;
@@ -89,7 +89,7 @@ function EditItem({ barcode, dateScanned, toggleEditDialog }) {
       await instance
         .post(`/edit_item.php?barcode=${barcode}`, data)
         .then((res) => {
-          console.log("SENDTE DATA DIN ...");
+          // console.log("Sent data");
           toggleEditDialog();
         });
     } catch (error) {
@@ -156,9 +156,8 @@ function EditItem({ barcode, dateScanned, toggleEditDialog }) {
                   <option value="kg">kg</option>
                   <option value="mg">mg</option>
                   <option value="l">l</option>
+                  <option value="dl">dl</option>
                   <option value="ml">ml</option>
-                  <option value="oz">oz</option>
-                  <option value="lb">lb</option>
                 </select>
               </div>
               <div className="seksjon">

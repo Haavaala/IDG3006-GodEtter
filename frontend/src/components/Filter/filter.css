@@ -1,4 +1,4 @@
-.filter-container{
+.filter-container {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -7,25 +7,25 @@
     padding-bottom: 5px;
 }
 
-.filter-container::-webkit-scrollbar{
-    width: 2.5px; 
+.filter-container::-webkit-scrollbar {
+    width: 2.5px;
     position: absolute;
-    right: 0; 
+    right: 0;
     height: 5px;
     margin: 10px;
     border-radius: 5px;
 }
 
 .filter-container::-webkit-scrollbar-thumb {
-    background-color: #4A5085;
+    background-color: #4a5085;
     border-radius: 5px;
- }
- ::-webkit-scrollbar-track {
+}
+::-webkit-scrollbar-track {
     background: var(--light_grey);
     border-radius: 5px;
- }
+}
 
-.filterButton{
+.filterButton {
     background-color: var(--baby_waluigi);
     color: var(--black);
     padding: 5px 10px;
