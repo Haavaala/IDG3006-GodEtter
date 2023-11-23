@@ -9,7 +9,7 @@ export default function TopMenu({ data }) {
   if (!data) return null;
 
   const navigate = useNavigate();
-  const [setNotificationContentOpened] = useState(false);
+  const [NotificationContentOpened, setNotificationContentOpened] = useState(false);
 
   const isNewItem = data.some(i => {
     const scanningDateString = i.date_added.split(" ")[0];
