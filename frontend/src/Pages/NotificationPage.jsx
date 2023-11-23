@@ -1,8 +1,7 @@
-import React from 'react'
-import NotificationContent from '../components/Notification/NotificationContent'
-import { useLocation } from 'react-router-dom'
-import TopMenu from '../components/TopMenu/TopMenu';
-import TopMenuInside from '../components/TopMenu/TopMenuInside';
+import React from "react";
+import NotificationContent from "../components/Notification/NotificationContent";
+import { useLocation } from "react-router-dom";
+import TopMenuInside from "../components/TopMenu/TopMenuInside";
 
 function NotificationPage() {
   const location = useLocation();
@@ -13,7 +12,7 @@ function NotificationPage() {
       <TopMenuInside notifications />
       <NotificationContent data={passedData}></NotificationContent>
     </>
-  )
+  );
 }
 
-export default NotificationPage
+export default NotificationPage;

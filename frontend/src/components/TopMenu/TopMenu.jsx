@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Notification from "../Notification/Notification";
 import Settings from "../Settings/Settings";
 import "./topMenu.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function TopMenu({ data }) {
 
   if (!data) return null;
 
   const navigate = useNavigate();
-  const [notificationContentOpened, setNotificationContentOpened] = useState(false);
+  const [setNotificationContentOpened] = useState(false);
 
   const isNewItem = data.some(i => {
     const scanningDateString = i.date_added.split(" ")[0];
@@ -49,7 +49,6 @@ export default function TopMenu({ data }) {
     <>
       <div className="topMenu">
         {isNewItem ? (
-          // <RedDotIcon className="red_dotBellIcon" onClick={handleNotificationClick} />
           <Notification className="bellIcon" onClick={handleNotificationClick} dotColor={dotColor} />
         ) : (
           <Notification className="bellIcon" onClick={handleNotificationClick} />
