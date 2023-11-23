@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function GroceryListPage() {
-  return (
-    <div>GroceryListPage</div>
-  )
+  return <div>GroceryListPage</div>;
 }
 
-export default GroceryListPage
+export default GroceryListPage;

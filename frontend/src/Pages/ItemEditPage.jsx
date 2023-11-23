@@ -1,12 +1,12 @@
-import React from 'react'
-import EditItem from '../components/EditItem/EditItem'
+import React from "react";
+import EditItem from "../components/EditItem/EditItem";
 
 function ItemEditPage() {
   return (
     <>
-    <EditItem></EditItem>
+      <EditItem></EditItem>
     </>
-  )
+  );
 }
 
-export default ItemEditPage
+export default ItemEditPage;
