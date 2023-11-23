@@ -26,6 +26,7 @@ class MyController(Controller):
         success_sound = mixer.Sound('./sounds/victory.wav')
         error_sound = mixer.Sound('./sounds/error.wav')
         scanOut_sound = mixer.Sound('./sounds/scanOut.wav')
+        userInput_sound = mixer.Sound('./sounds/userInput.wav')
 
         #check if the user has pressed triangle or X and provides prints based on choice
         while scanning_in_progress:
@@ -48,6 +49,9 @@ class MyController(Controller):
                         #if success, give message and sound, else: give message and sound for fail
                         print('You successfully added item to your fridge')
                         success_sound.play()  # Play a success sound
+                    elif x.status_code == 300:
+                        print('Added unknown item, needs user input')
+                        userInput_sound.play() # Play a "requires user input sound"
                     else:
                         print('Error adding item to your fridge:', x.status_code)
                         error_sound.play()  # Play an error sound
@@ -58,12 +62,12 @@ class MyController(Controller):
             #scan out and sends the information needed to the backend
             else:
                 print('You scanned out an item with the barcode: ' + barcode)
-                url = "https://refu.re/fridge/delete_item.php?barcode=" + barcode
+                url = "https://refu.re/fridge/scan_out.php?barcode=" + barcode
                 data = {'key': '3gYSbkFlH9ZmuhbYiPaVIgfm39U7fbIQ', 'device_id': 1001}
                 try:
                     x = requests.post(url, data=data)
                     if x.status_code == 200 or x.status_code == 201:
-                        print('You Successfully scanned out an item!')
+                        print('You successfully scanned out an item!')
                         scanOut_sound.play()  # Play a success sound
                     else:
                         print('Error:', x.status_code)

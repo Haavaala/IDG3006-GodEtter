@@ -98,6 +98,10 @@ class Database
                 $query = "DELETE FROM items WHERE device_id = ? AND barcode = ? AND date_added = ?";
                 $param = "iss";
                 break;
+            case "scan_out":
+                $query = "DELETE FROM items WHERE device_id = ? AND barcode = ? AND date = (SELECT MIN(date) FROM items WHERE device_id = ? AND barcode = ?)";
+                $param = "is";
+                break;
             case "select_one":
                 $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, category_id, edited FROM items WHERE device_id = ? AND barcode = ? AND date_added = ?";
                 $param = "iss";
@@ -140,7 +144,7 @@ class Database
     // Method for getting the full inventory from the database
     public function run_get_inventory($device_id, $category = false)
     {
-        if (!$category){
+        if (!$category) {
             // Query to get all items from one device's inventory
             $query = "SELECT barcode, name, brand, weight, weight_unit, allergens, date_added, date_bestbefore, category_id, edited from items WHERE device_id = ? ORDER BY date_added DESC";
         } else {
@@ -150,8 +154,8 @@ class Database
         // Prepare the statement
         $statement = $this::$con->prepare($query);
 
-        
-        if (!$category){
+
+        if (!$category) {
             // Bind the param for one INT variable, the device id
             $statement->bind_param("i", $device_id);
         } else {
