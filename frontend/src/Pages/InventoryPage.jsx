@@ -102,6 +102,7 @@ function InventoryPage() {
     console.log("LASTER");
     return <p>Laster...</p>;
   }
+
   return (
     <>
       <TopMenu data={data} />

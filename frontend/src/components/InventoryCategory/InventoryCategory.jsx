@@ -1,8 +1,8 @@
-import React from "react";
-import "./inventoryCategory.css";
-import InventoryCard from "../InventoryCard/InventoryCard";
-import Stroke from "../Stroke/Stroke";
-import SelectIcon from "../Icons/SelectIcon";
+import React from 'react';
+import './inventoryCategory.css';
+import InventoryCard from '../InventoryCard/InventoryCard';
+import Stroke from '../Stroke/Stroke';
+import SelectIcon from '../Icons/SelectIcon';
 
 export default function InventoryCategory({ category, data, retrieveData }) {
   if (!category && !data) return null; // Sjekker om category og data ikke eksisterer, hvis saa - ikkje gjoer naake.

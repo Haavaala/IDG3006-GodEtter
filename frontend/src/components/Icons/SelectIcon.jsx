@@ -13,21 +13,23 @@ import PetSupplies from "./PetSupplies";
 import Snacks from "./Snacks";
 import Topic from "./Topic";
 
-export default function SelectIcon({ category, size }) {
-  return (
-    <>
-      {category === "Uncategorized" ? <Uncategorized size={size} /> : ""}
-      {category === "Bakevarer og kjeks" ? <Bakery size={size} /> : ""}
-      {category === "Barneprodukter" ? <BabyProducts size={size} /> : ""}
-      {category === "Dessert" ? <Dessert size={size} /> : ""}
-      {category === "Drikke" ? <Beverage size={size} /> : ""}
-      {category === "Dyrevarer" ? <PetSupplies size={size} /> : ""}
-      {category === "Fisk og skalldyr" ? <Fish size={size} /> : ""}
-      {category === "Frukt og grønt" ? <Fruit size={size} /> : ""}
-      {category === "Kjøtt" ? <Meat size={size} /> : ""}
-      {category === "Meieri og egg" ? <Dairy size={size} /> : ""}
-      {category === "Pålegg" ? <Topic size={size} /> : ""}
-      {category === "Snacks og godteri" ? <Snacks size={size} /> : ""}
-    </>
-  );
+export default function SelectIcon({category, size}) {
+
+
+    return (
+        <>
+            {(category === 'Ukategorisert')?<Uncategorized size={size} />:''}
+            {(category === 'Bakevarer og kjeks')?<Bakery size={size}/>:''}
+            {(category === 'Barneprodukter')?<BabyProducts size={size}/>:''}
+            {(category === 'Dessert')?<Dessert size={size}/>:''}
+            {(category === 'Drikke')?<Beverage size={size}/>:''}
+            {(category === 'Dyrevarer')?<PetSupplies size={size}/>:''}
+            {(category === 'Fisk og skalldyr')?<Fish size={size}/>:''}
+            {(category === 'Frukt og grønt')?<Fruit size={size}/>:''}
+            {(category === 'Kjøtt')?<Meat size={size}/>:''}
+            {(category === 'Meieri og egg')?<Dairy size={size}/>:''}
+            {(category === 'Pålegg')?<Topic size={size}/>:''}
+            {(category === 'Snacks og godteri')?<Snacks size={size}/>:''}
+        </>
+    )
 }
