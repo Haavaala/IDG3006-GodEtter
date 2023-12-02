@@ -153,6 +153,18 @@ function send_item($req_data, $barcode, $device_id)
 
         // ! Failsafe for products which lacks certain information
 
+        if (!$data->name) {
+            $name = "";
+        } else {
+            $name = $data->name;
+        }
+
+        if (!$data->brand) {
+            $brand = "";
+        } else {
+            $brand = $data->brand;
+        }
+
         if (!$data->weight) {
             $weight = 0;
         } else {
@@ -165,13 +177,11 @@ function send_item($req_data, $barcode, $device_id)
             $weight_unit = $data->weight_unit;
         }
 
-
-
         // Add item to database
         // Prepare data array
         $prepared_data = [
-            $data->name,
-            $data->brand,
+            $name,
+            $brand,
             $weight,
             $weight_unit,
             $allergens,
