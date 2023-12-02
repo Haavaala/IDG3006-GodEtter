@@ -1,7 +1,7 @@
 {
-  "name": "idg3006-smartfridge",
+  "name": "idg3006-godetter",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

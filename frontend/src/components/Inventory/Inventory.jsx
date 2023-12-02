@@ -72,8 +72,9 @@ export default function Inventory({data, categories, retrieveData}) {
         </div>
                 
         {sortedCategories.map((category) => {
+
         if (category.active) {
-            return filterData(category);
+          return filterData(category);
         }
         return null;
         })}
