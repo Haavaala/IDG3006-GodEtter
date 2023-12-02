@@ -102,8 +102,6 @@ function InventoryPage() {
     console.log("LASTER");
     return <p>Laster...</p>;
   }
-  console.log("categories on page", categories)
-
 
   return (
     <>
