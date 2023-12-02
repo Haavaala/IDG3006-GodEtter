@@ -81,7 +81,7 @@ function send_item($req_data, $barcode, $device_id)
         // ! Use the first store instead for now, as the last ones do not have categories for some reason..
         $data = $req_data->data->products[0];
 
-ß
+
         // * ---- Find allergens
 
         $data_allergens = $req_data->data->allergens;
