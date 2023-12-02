@@ -81,7 +81,7 @@ function send_item($req_data, $barcode, $device_id)
         // ! Use the first store instead for now, as the last ones do not have categories for some reason..
         $data = $req_data->data->products[0];
 
-
+ß
         // * ---- Find allergens
 
         $data_allergens = $req_data->data->allergens;
@@ -107,9 +107,12 @@ function send_item($req_data, $barcode, $device_id)
         // Find the lowest depth in the category array to get the top category
         $lowestDepthItem = null;
 
-        foreach ($data_categories as $i) {
-            if ($lowestDepthItem === null || $i->depth < $lowestDepthItem->depth) {
-                $lowestDepthItem = $i;
+        // ! new failsafe
+        if ($data_categories) {
+            foreach ($data_categories as $i) {
+                if ($lowestDepthItem === null || $i->depth < $lowestDepthItem->depth) {
+                    $lowestDepthItem = $i;
+                }
             }
         }
 
