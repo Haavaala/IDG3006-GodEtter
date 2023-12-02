@@ -48,17 +48,16 @@ function barcode_req($barcode, $device_id)
     unset($url);
 
     // Check if property "message" exists in the request. If so, the item was not found.
-    if (!is_null($data)){
+    if (!is_null($data)) {
         if (!property_exists($data, "message")) {
             send_item($data, $barcode, $device_id);
         } else {
             send_item(null, $barcode, $device_id);
         }
     } else {
-        log_error("Tried to get data for an item, but data returned null.",false);
-        response(500,"Server error");
+        log_error("Tried to get data for an item, but data returned null.", false);
+        response(500, "Server error");
     }
-    
 }
 
 // Function for sending an item to the database
@@ -89,9 +88,9 @@ function send_item($req_data, $barcode, $device_id)
         $allergens = "";
 
         // Add all allergens from the data table into one string to store
-        foreach($data_allergens as $a){
-            if ($a->contains == "YES"){
-                if ($allergens != ""){
+        foreach ($data_allergens as $a) {
+            if ($a->contains == "YES") {
+                if ($allergens != "") {
                     $allergens = $allergens + ", " + $a->display_name;
                 } else {
                     $allergens = $a->display_name;
@@ -115,7 +114,7 @@ function send_item($req_data, $barcode, $device_id)
         }
 
         if ($lowestDepthItem !== null) {
-           // echo "Lowest depth item found: " . $lowestDepthItem->name;
+            // echo "Lowest depth item found: " . $lowestDepthItem->name;
             $to_parse = $lowestDepthItem->name;
         } else {
             //echo "Failed to find lowest depth item.";
@@ -131,7 +130,7 @@ function send_item($req_data, $barcode, $device_id)
         $currentDateTime = new DateTime();
 
         if ($category == 9) {
-             // Add 1 week to the current date and time for meat category
+            // Add 1 week to the current date and time for meat category
             $currentDateTime->add(new DateInterval('P1W'));
         } else {
             // Add 2 week to the current date and time for everything else
@@ -151,6 +150,21 @@ function send_item($req_data, $barcode, $device_id)
         //     $result = $db->run_item_query("update_inc", $item);
         //     $response_text = "update";
         // } else {
+
+        // ! Failsafe for products which lacks certain information
+
+        if (!$data->weight) {
+            $weight = 0;
+        } else {
+            $weight = $data->weight;
+        }
+
+        if (!$data->weight_unit) {
+            $weight_unit = "g";
+        } else {
+            $weight_unit = $data->weight_unit;
+        }
+
 
 
         // Add item to database
@@ -180,15 +194,15 @@ function send_item($req_data, $barcode, $device_id)
         //     $result = $db->run_item_query("update_inc", $item);
         //     $response_text = "update";
         // } else {
-            // Add barcode to database, unknown item
-            $result = $db->run_item_query("create_unknown", $item);
-            $response_text = "create";
+        // Add barcode to database, unknown item
+        $result = $db->run_item_query("create_unknown", $item);
+        $response_text = "create";
         // }
     }
 
     if (is_null($req_data) && $result) {
         // If req_data is null, but there is a result -> barcode has been added, but needs user input
-        
+
 
         if ($response_text == "update") {
             response(300, "Updated quantity of unknown item.");
@@ -209,47 +223,48 @@ function send_item($req_data, $barcode, $device_id)
 }
 
 // Function for parsing category
-function parse_category($cat){
+function parse_category($cat)
+{
 
     //echo "Parsing " . $cat;
 
     // Uncategorized
-    if ($cat == ""){
+    if ($cat == "") {
         return 1;
     }
 
-    switch(true){
+    switch (true) {
         case (str_contains($cat, "Bakeri") || str_contains($cat, "Bakevarer")):
             return 2; // Bakevarer og kjeks
-        
-        case(str_contains($cat, "Barneprodukter")):
+
+        case (str_contains($cat, "Barneprodukter")):
             return 3; // Barneprodukter
-        
-        case(str_contains($cat, "Dessert") || str_contains($cat, "iskrem")):
+
+        case (str_contains($cat, "Dessert") || str_contains($cat, "iskrem")):
             return 4; // Dessert
-                
-        case(str_contains($cat, "Drikke")):
+
+        case (str_contains($cat, "Drikke")):
             return 5; // Drikke
 
-        case(str_contains($cat, "Dyr")):
+        case (str_contains($cat, "Dyr")):
             return 6; // Dyrevarer
-        
-        case(str_contains($cat, "Fisk") || str_contains($cat, "skalldyr")):
+
+        case (str_contains($cat, "Fisk") || str_contains($cat, "skalldyr")):
             return 7; // Fisk og skalldyr
-                
-        case(str_contains($cat, "Frukt") || str_contains($cat, "grønt")):
+
+        case (str_contains($cat, "Frukt") || str_contains($cat, "grønt")):
             return 8; // Frukt og grønt
 
-        case(str_contains($cat, "Kjøtt") || str_contains($cat, "Kylling") || str_contains($cat, "fjærkre")):
+        case (str_contains($cat, "Kjøtt") || str_contains($cat, "Kylling") || str_contains($cat, "fjærkre")):
             return 9; // Kjøtt
-        
-        case(str_contains($cat, "Meieri") || str_contains($cat, "egg") || str_contains($cat, "Ost")):
+
+        case (str_contains($cat, "Meieri") || str_contains($cat, "egg") || str_contains($cat, "Ost")):
             return 10; // Meieri og egg
-                
-        case(str_contains($cat, "Pålegg") || str_contains($cat, "frokost")):
+
+        case (str_contains($cat, "Pålegg") || str_contains($cat, "frokost")):
             return 11; // Pålegg
 
-        case(str_contains($cat, "Snacks") || str_contains($cat, "godteri")):
+        case (str_contains($cat, "Snacks") || str_contains($cat, "godteri")):
             return 12; // Snacks og godteri
     }
 
