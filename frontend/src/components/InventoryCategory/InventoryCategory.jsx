@@ -1,6 +1,4 @@
 import React from 'react';
-import instance from "../../instance";
-import { useState, useEffect } from "react";
 import './inventoryCategory.css';
 import InventoryCard from '../InventoryCard/InventoryCard';
 import Stroke from '../Stroke/Stroke';

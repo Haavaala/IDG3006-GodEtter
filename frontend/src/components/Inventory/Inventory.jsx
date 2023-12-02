@@ -10,7 +10,7 @@ export default function Inventory({data, categories, retrieveData}) {
 
     if (!categories && !data) return null; // Sjekker om category og data ikke eksisterer, hvis saa - ikkje gjoer naake.
 
-    console.log(categories)
+    console.log("categories2",categories)
     const [toggledCategories, setToggledCategories] = useState([]);
 
 
@@ -38,7 +38,12 @@ export default function Inventory({data, categories, retrieveData}) {
         );
       };
 
-      const sortedCategories = [...toggledCategories].sort((a, b) => (b.active ? 1 : -1));
+      const sortedCategories = [...toggledCategories].sort((a, b) => {
+        if (a.active === b.active) {
+          return a.name.localeCompare(b.name);
+        }
+        return b.active ? 1 : -1;
+      });
 
       const filterData = (category) => {
         const filteredArray = data.filter((item) => item.category_id === category.category_id);
@@ -52,16 +57,13 @@ export default function Inventory({data, categories, retrieveData}) {
     useEffect(() => {
     }, [toggledCategories]);
 
+    console.log("category", categories)
+    // console.log("toggledCategories ",toggledCategories)
+    // console.log("sortedCategories ",sortedCategories)
 
   
     return (
         <>
-        {/* <div className='filter-container'>
-          {categories.map((category, index) => (
-            <FilterButton key={index} filterText={category.name} id={category.category_id} activeStatus={category.active} toggleFilterFunc={toggleFilter}
-            />
-          ))}
-        </div> */}
         <div className='filter-container'>
           {sortedCategories.map((category, index) => (
             <FilterButton key={index} filterText={category.name} id={category.category_id} activeStatus={category.active} toggleFilterFunc={toggleFilter}
@@ -75,9 +77,6 @@ export default function Inventory({data, categories, retrieveData}) {
         }
         return null;
         })}
-        
-       {// <InventoryCategory category={categories[0].name} category_id={categories[0].category_id} />
-       }
         </>
     )
 }

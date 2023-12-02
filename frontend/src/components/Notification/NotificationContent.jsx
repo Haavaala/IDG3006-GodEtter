@@ -157,7 +157,7 @@ function NotificationContent() {
                   <Stroke />
                 </>
               );
-            }
+            } 
           })
         ) : (
           <p> Du har ingen varer nylig lagt inn i ditt kjøleskap. </p>

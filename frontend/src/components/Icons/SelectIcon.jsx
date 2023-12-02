@@ -18,7 +18,7 @@ export default function SelectIcon({category, size}) {
 
     return (
         <>
-            {(category === 'Uncategorized')?<Uncategorized size={size} />:''}
+            {(category === 'Ukategorisert')?<Uncategorized size={size} />:''}
             {(category === 'Bakevarer og kjeks')?<Bakery size={size}/>:''}
             {(category === 'Barneprodukter')?<BabyProducts size={size}/>:''}
             {(category === 'Dessert')?<Dessert size={size}/>:''}
