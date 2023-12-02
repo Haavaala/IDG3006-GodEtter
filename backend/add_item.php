@@ -172,8 +172,8 @@ function send_item($req_data, $barcode, $device_id)
         $prepared_data = [
             $data->name,
             $data->brand,
-            $data->weight,
-            $data->weight_unit,
+            $weight,
+            $weight_unit,
             $allergens,
             $category,
             $bestbefore
