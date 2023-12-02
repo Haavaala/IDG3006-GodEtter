@@ -25,7 +25,7 @@ class MyController(Controller):
         global scan, scanning_in_progress
         success_sound = mixer.Sound('./sounds/victory.wav')
         error_sound = mixer.Sound('./sounds/error.wav')
-        scanOut_sound = mixer.Sound('./sounds/scanOut.wav')
+        # scanOut_sound = mixer.Sound('./sounds/scanOut.wav')
         userInput_sound = mixer.Sound('./sounds/userInput.wav')
 
         #check if the user has pressed triangle or X and provides prints based on choice
@@ -60,21 +60,21 @@ class MyController(Controller):
                     print('Connection Error:', e)
                     error_sound.play()
             #scan out and sends the information needed to the backend
-            else:
-                print('You scanned out an item with the barcode: ' + barcode)
-                url = "https://refu.re/fridge/scan_out.php?barcode=" + barcode
-                data = {'key': '3gYSbkFlH9ZmuhbYiPaVIgfm39U7fbIQ', 'device_id': 1001}
-                try:
-                    x = requests.post(url, data=data)
-                    if x.status_code == 200 or x.status_code == 201:
-                        print('You successfully scanned out an item!')
-                        scanOut_sound.play()  # Play a success sound
-                    else:
-                        print('Error:', x.status_code)
-                        error_sound.play()  # Play an error sound
-                except requests.exceptions.RequestException as e:
-                    print('Connection Error:', e)
-                    error_sound.play()
+            # else:
+            #     print('You scanned out an item with the barcode: ' + barcode)
+            #     url = "https://refu.re/fridge/scan_out.php?barcode=" + barcode
+            #     data = {'key': '3gYSbkFlH9ZmuhbYiPaVIgfm39U7fbIQ', 'device_id': 1001}
+            #     try:
+            #         x = requests.post(url, data=data)
+            #         if x.status_code == 200 or x.status_code == 201:
+            #             print('You successfully scanned out an item!')
+            #             scanOut_sound.play()  # Play a success sound
+            #         else:
+            #             print('Error:', x.status_code)
+            #             error_sound.play()  # Play an error sound
+            #     except requests.exceptions.RequestException as e:
+            #         print('Connection Error:', e)
+            #         error_sound.play()
 
         scanning_in_progress = False  # Reset the flag when scanning is done
 
@@ -87,12 +87,12 @@ class MyController(Controller):
         threading.Thread(target=self.run_my_script).start()
 
     #runs the instance of functionality when pressing triangle
-    def on_triangle_press(self):
-        global scan, script_running, scanning_in_progress
-        scan = False
-        script_running = True
-        scanning_in_progress = True
-        threading.Thread(target=self.run_my_script).start()
+    # def on_triangle_press(self):
+    #     global scan, script_running, scanning_in_progress
+    #     scan = False
+    #     script_running = True
+    #     scanning_in_progress = True
+    #     threading.Thread(target=self.run_my_script).start()
 
     #exits the script
     def on_circle_press(self):
