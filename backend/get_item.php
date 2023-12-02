@@ -30,11 +30,14 @@ function get_item($barcode, $device_id, $datestamp)
 
     $res = $db->run_item_query("select_one", $item);
 
+    $data = [];
+
     while ($row = mysqli_fetch_assoc($res)) {
         $data[] = $row;
     };
 
-    if ($data) {
+    // Fix 02.12, make sure data has more than 0 items
+    if (count($data) > 0) {
         response(200, $data);
         exit;
     } else {
