@@ -3,7 +3,7 @@ nav {
     justify-content: center;
     background-color: var(--black);
     color: var(--white);
-    min-height: 7vh;
+    min-height: 68px;
     margin: 20px;
     border-radius: 20px;
 

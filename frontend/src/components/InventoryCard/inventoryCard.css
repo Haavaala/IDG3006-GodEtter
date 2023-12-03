@@ -6,23 +6,19 @@
     height: min-content;
     width: calc(40%);
     max-width: 45%;
-    /* flex: 1; */
     flex: 1 1 auto;
-    /* background-color: white; */
 }
 
 .inventoryCard__stroke--horizontal {
     background-color: var(--black);
     outline-style: solid;
     outline-color: var(--black);
-    outline-width: .25px;
-    /* outline-offset: -1px; */
+    outline-width: 0.25px;
     border-radius: 4px;
 }
 
 .inventoryCard__icon {
     min-width: 56px;
-    /* padding: 3px 5px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,8 +36,8 @@
 .inventoryCard__titleBox p {
     margin: 10px;
     display: -webkit-box;
-    -webkit-line-clamp: 3; 
-    line-clamp: 3; 
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -58,7 +54,7 @@
     height: min-content;
 }
 
-.inventoryCard__numberBox p { 
+.inventoryCard__numberBox p {
     padding: 0;
     margin: 0;
 }
@@ -163,35 +159,12 @@
     padding-top: 16px;
 }
 
- .inventoryDialog__modify {
+.inventoryDialog__modify {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
     align-items: center;
 }
-
-/*
-
-.inventoryDialog__modify button {
-    padding: 5px;
-    border-radius: 6px;
-    display: flex;
-    gap: 10px;
-}
-
-.inventoryDialog__modify button.edit {
-    background-color: var(--baby_waluigi);
-    border: 2px solid var(--black);
-}
-
-.inventoryDialog__modify button.delete {
-    background-color: var(--white);
-    border: 2px solid #A54E1E;
-}
-
-.inventoryDialog__modify button p {
-    padding: 1px;
-} */
 
 .inventoryDialog__scanned {
     font-size: 12px;
@@ -228,7 +201,7 @@ dialog {
     width: 100%;
     background: inherit;
     background-color: black;
-    opacity: .3;
+    opacity: 0.3;
     top: 0;
     left: 0;
     z-index: 3;
@@ -239,4 +212,3 @@ dialog {
     /* top:305px; */
     z-index: 6;
 }
-

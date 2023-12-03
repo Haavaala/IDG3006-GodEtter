@@ -1,17 +1,17 @@
-import React from 'react';
-import './icons.css';
-import Dessert from './Dessert';
-import Beverage from './Beverage';
-import Uncategorized from './Uncategorized';
-import Dairy from './Dairy';
-import Bakery from './Bakery';
-import BabyProducts from './BabyProducts';
-import Fish from './Fish';
-import Fruit from './Fruit';
-import Meat from './Meat';
-import PetSupplies from './PetSupplies';
-import Snacks from './Snacks';
-import Topic from './Topic';
+import React from "react";
+import "./icons.css";
+import Dessert from "./Dessert";
+import Beverage from "./Beverage";
+import Uncategorized from "./Uncategorized";
+import Dairy from "./Dairy";
+import Bakery from "./Bakery";
+import BabyProducts from "./BabyProducts";
+import Fish from "./Fish";
+import Fruit from "./Fruit";
+import Meat from "./Meat";
+import PetSupplies from "./PetSupplies";
+import Snacks from "./Snacks";
+import Topic from "./Topic";
 
 export default function SelectIcon({category, size}) {
 

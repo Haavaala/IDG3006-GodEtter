@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./inventoryCard.css";
 import NewSticker from "./NewSticker";
 import instance from "../../instance";
@@ -76,15 +76,9 @@ export default function InventoryCard({
       document.body.style.overflow = "auto";
     };
   }, [isDialogOpen, isEditDialogOpen]);
-  // const dialogRef = useRef(null);
 
   const device_id = 1001;
 
-  // const openDialog = () => {
-  //   dialogRef.current.showModal();
-  // };
-
-  //legger bare til slettefunksjonalitet her
   const handleDeleteItem = () => {
     const data = {
       barcode,
@@ -94,20 +88,14 @@ export default function InventoryCard({
     instance
       .post(`/delete_item.php?barcode=${barcode}`, data)
       .then((response) => {
-        console.log(`Du sletta den ${barcode}`, response.data);
+        //console.log(`You deleted this product: ${barcode}`, response.data);
         retrieveData();
         closeDialog();
-
-        // setData((prevData) => prevData.filter((item) => item.barcode !== barcode));
       })
       .catch((error) => {
         console.error("Error ved sletting item", error);
       });
   };
-
-  // const closeDialog = () => {
-  //   dialogRef.current.close();
-  // };
 
   const formatDate = (date) => {
     date.split(" ")[0];
@@ -177,7 +165,6 @@ export default function InventoryCard({
       );
 
       const today = new Date();
-      // return today <= twoWeeksLater ? "#59704B" : "#BD6F4E";
       return today <= twoWeeksLater;
     } else {
       const today = new Date();
@@ -192,11 +179,6 @@ export default function InventoryCard({
   };
 
   const IconColor = checkBestBeforeDate();
-
-  const handleEditItem = (barcode) => {
-    //redirect to the edit page
-    history.pushState(`/Edititem/${barcode}`);
-  };
 
   return (
     <>
@@ -372,7 +354,9 @@ export default function InventoryCard({
               >
                 Rediger vare
               </Button>
-              <Button func={handleDeleteItem} type={2} option={2} icon={true}>Slett vare</Button>
+              <Button func={handleDeleteItem} type={2} option={2} icon={true}>
+                Slett vare
+              </Button>
             </div>
           </div>
         </dialog>

@@ -17,10 +17,9 @@
   margin-top: 20px;
 }
 
-.editItem-form form button{
-  margin: .5em auto;
+.editItem-form form button {
+  margin: 0.5em auto;
 }
-
 
 .seksjon {
   display: flex;
@@ -98,8 +97,8 @@
   background: var(--baby_waluigi);
   color: var(--black);
   cursor: pointer;
-    width:119px;
-  height:30px;
+  width: 119px;
+  height: 30px;
   border: solid var(--black) 1px;
 }
 
@@ -119,11 +118,11 @@
   height: 2rem;
   color: var(--black);
   border: solid var(--peach) 1px;
-  width:119px;
-  height:30px;
+  width: 119px;
+  height: 30px;
 }
 
-.button-container{
-  display:flex;
-  flex-direction:row;
+.button-container {
+  display: flex;
+  flex-direction: row;
 }

@@ -16,21 +16,15 @@ function InventoryPage() {
 
   const [initialFetch, setInitialFetch] = useState(false);
 
-  // const [searchedData, setSearchedData] = useState([]);
-
-  // const handleSearchChange = (event) => {
-  //   setSearchInput(event.target.value);
-  // };
 
   // Set device id
   const deviceId = 1001;
 
   useEffect(() => {
-    if (!initialFetch){ 
+    if (!initialFetch) {
       retrieveAllData();
       setInitialFetch(true);
     }
-    
 
     // Hente data hvert 10 sekund
     const dataInterval = setInterval(() => {
@@ -52,8 +46,8 @@ function InventoryPage() {
     } else {
       setData(allData);
     }
-    console.log(data);
-    console.log(searchInput);
+    // console.log(data);
+    // console.log(searchInput);
   }, [searchInput]);
 
   const retrieveData = async () => {
@@ -108,8 +102,6 @@ function InventoryPage() {
     console.log("LASTER");
     return <p>Laster...</p>;
   }
-  console.log("categories on page", categories)
-
 
   return (
     <>
