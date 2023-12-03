@@ -235,8 +235,8 @@ dialog {
 }
 
 .editDialog{
-    position:absolute;
-    top:305px;
+    /* position:absolute; */
+    /* top:305px; */
     z-index: 6;
 }
 
