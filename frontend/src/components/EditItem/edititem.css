@@ -1,5 +1,5 @@
 .editItem-modal {
-  display: flex;
+  display: flex; 
   flex-direction: column;
   background: var(--white);
   padding: 20px;
