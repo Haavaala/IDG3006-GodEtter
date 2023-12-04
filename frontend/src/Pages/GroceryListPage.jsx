@@ -1,7 +1,7 @@
 import React from "react";
 
 function GroceryListPage() {
-  return <div>GroceryListPage</div>;
+  return <div>Kommer snart...</div>;
 }
 
 export default GroceryListPage;
