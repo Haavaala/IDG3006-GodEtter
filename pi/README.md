@@ -7,9 +7,10 @@ Important: This was originally written for the Raspberry Pi 4, and the guide wil
 ## Getting Started
 
 The python script requires an .env file to run in the same directory as the script with these values:
+```
 SITE_URL = "" (back-end site url without slash at the end)
 SITE_KEY = "" (site connection key)
-
+```
 ### Run 
 if start script on startup for py:
     it is running once the py has power (needs to be fixed now)
