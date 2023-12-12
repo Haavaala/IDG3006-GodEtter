@@ -5,6 +5,12 @@ from pyPS4Controller.controller import Controller
 import os
 import pygame
 from pygame import mixer
+from dotenv import load_dotenv
+
+# Env stuff
+load_dotenv()
+SITE_URL = os.getenv('SITE_URL')
+SITE_KEY = os.getenv('SITE_KEY')
 
 script_running = False
 stop_thread = False
@@ -41,8 +47,8 @@ class MyController(Controller):
             if scan:
                 #sends the scanned barcode to the database
                 print('You scanned an item with the barcode: ' + barcode)
-                url = "https://refu.re/fridge/add_item.php?barcode=" + barcode
-                data = {'key': '3gYSbkFlH9ZmuhbYiPaVIgfm39U7fbIQ', 'device_id': 1001}
+                url = SITE_URL + "/add_item.php?barcode=" + barcode
+                data = {'key': SITE_KEY, 'device_id': 1001}
                 try:
                     x = requests.post(url, data=data)
                     if x.status_code == 200 or x.status_code == 201:
@@ -62,8 +68,8 @@ class MyController(Controller):
             #scan out and sends the information needed to the backend
             # else:
             #     print('You scanned out an item with the barcode: ' + barcode)
-            #     url = "https://refu.re/fridge/scan_out.php?barcode=" + barcode
-            #     data = {'key': '3gYSbkFlH9ZmuhbYiPaVIgfm39U7fbIQ', 'device_id': 1001}
+            #     url = SITE_URL + "/scan_out.php?barcode=" + barcode
+            #     data = {'key': SITE_KEY, 'device_id': 1001}
             #     try:
             #         x = requests.post(url, data=data)
             #         if x.status_code == 200 or x.status_code == 201:
