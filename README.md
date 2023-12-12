@@ -10,9 +10,11 @@ It is built using:
 To set this project up locally, check the README files in all the individual folders.
 
 
-[Frontend readme](frontend/README.md)
-[Backend readme](backend/README.md)
-[Hardware/Python/Pi readme](pi/README.md)
+[Front-end readme](frontend/README.md)
+
+[Back-end readme](backend/README.md)
+
+[Hardware/Pi readme](pi/README.md)
 
 ## Authors
 - Martine Garvik Fremstad - Designer
