@@ -5,7 +5,10 @@ Here lays the hardware condfiguration and Python scripts for the GodEtter projec
 Important: This was originally written for the Raspberry Pi 4, and the guide will be based on this. A physical barcode scanner was also used, but it is not needed. You can simply input the codes by using a keyboard.
 
 ## Getting Started
-    
+
+The python script requires an .env file to run in the same directory as the script with these values:
+SITE_URL = "" (back-end site url without slash at the end)
+SITE_KEY = "" (site connection key)
 
 ### Run 
 if start script on startup for py:
