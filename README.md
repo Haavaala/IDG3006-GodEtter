@@ -9,6 +9,11 @@ It is built using:
 ## Getting Started
 To set this project up locally, check the README files in all the individual folders.
 
+
+[Frontend readme](frontend/README.md)
+[Backend readme](backend/README.md)
+[Hardware/Python/Pi readme](pi/README.md)
+
 ## Authors
 - Martine Garvik Fremstad - Designer
 - Ingvild Netland Nystein - Designer
