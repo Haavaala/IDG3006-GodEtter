@@ -18,7 +18,7 @@ To set this project up locally, check the README files in all the individual fol
 
 ## Authors
 - Martine Garvik Fremstad - Designer
-- Ingvild Netland Nystein - Designer
+- Ingvild Netland Nystein - Designer - [IngvildNN](https://github.com/IngvildNN)
 - Ingrid Gladheim - Front-end developer - [ingring](https://github.com/ingring)
 - Håvard Larsen - Hardware & front-end developer - [Haavaala](https://github.com/haavaala)
 - Nicolas Laukemann - Back-end developer - [nicollau](https://github.com/nicollau)
